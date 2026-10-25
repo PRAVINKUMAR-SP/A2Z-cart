@@ -27,10 +27,15 @@ npm run dev
 ### 2. Backend REST API (Java 21 + Spring Boot 3.3.x)
 ```powershell
 cd backend
-..\backend-tools\apache-maven-3.9.9\bin\mvn.cmd spring-boot:run
+.\mvnw.cmd spring-boot:run
 ```
 > **API URL:** [http://localhost:8085](http://localhost:8085)  
 > **API Proxy:** Configured in Vite (`/api` -> `http://localhost:8085`)
+
+### 3. Live AWS EC2 Production Deployment
+> 🌐 **Live Website:** [http://15.206.84.110](http://15.206.84.110)  
+> 🔄 **CI/CD:** Automated via GitHub Actions on every push to `main`.
+
 
 ---
 
