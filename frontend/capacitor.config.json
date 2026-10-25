@@ -1,0 +1,16 @@
+{
+  "appId": "com.a2zcart.app",
+  "appName": "A2Z-cart",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true,
+    "allowNavigation": [
+      "15.206.84.110",
+      "*.a2zcart.com"
+    ]
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}
