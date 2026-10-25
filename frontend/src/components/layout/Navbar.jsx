@@ -125,8 +125,8 @@ export default function Navbar() {
             A2Z<span className="text-blue-600 font-extrabold">~cart</span>
           </Link>
 
-          {/* Center: Refined Animated "Welcome to A2Z~cart" */}
-          <div className="flex flex-col items-center justify-center select-none group cursor-default">
+          {/* Center: Refined Animated "Welcome to A2Z~cart" (Desktop/Tablet Only) */}
+          <div className="hidden md:flex flex-col items-center justify-center select-none group cursor-default">
             <span className="welcome-gradient-text text-base sm:text-lg md:text-xl font-black font-['Outfit'] tracking-tight">
               Welcome to A2Z~cart
             </span>

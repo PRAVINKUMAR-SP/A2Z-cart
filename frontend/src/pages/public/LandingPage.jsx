@@ -177,27 +177,27 @@ export default function LandingPage() {
     <div className="w-full bg-[#FAFBFD] text-slate-800 pb-24 space-y-16">
 
       {/* 1. Human-Crafted Marketplace Hero Banner */}
-      <section className="w-full min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] py-8 lg:py-0 bg-gradient-to-b from-blue-50/70 via-indigo-50/30 to-[#FAFBFD] border-b border-slate-200/60 flex items-center">
+      <section className="w-full min-h-0 lg:min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] py-6 sm:py-8 lg:py-0 bg-gradient-to-b from-blue-50/70 via-indigo-50/30 to-[#FAFBFD] border-b border-slate-200/60 flex items-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
             
             {/* Left Promotional Content */}
-            <div className="lg:col-span-6 space-y-5 sm:space-y-6">
+            <div className="lg:col-span-6 space-y-4 sm:space-y-6">
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 font-['Outfit'] leading-[1.1]">
+              <h1 className="text-2.5xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 font-['Outfit'] leading-[1.1]">
                 Everything you love, <br />
                 <span className="text-blue-600">from A to Z.</span>
               </h1>
 
-              <p className="text-slate-600 text-base sm:text-lg max-w-xl leading-relaxed">
+              <p className="text-slate-600 text-sm sm:text-lg max-w-xl leading-relaxed">
                 Discover millions of authentic products from India's top verified brands. From designer dresses and high-performance sneakers to solid wood furniture, smart home appliances, toys, and sports gear.
               </p>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3.5 pt-2">
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 pt-1 sm:pt-2">
                 <Link
                   to="/shop"
-                  className="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-sm flex items-center gap-2 shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.02]"
+                  className="px-6 sm:px-8 py-3 sm:py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.02]"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   <span>Start Shopping</span>
@@ -206,14 +206,14 @@ export default function LandingPage() {
 
                 <Link
                   to="/seller-onboarding"
-                  className="px-7 py-3.5 bg-white hover:bg-slate-50 text-slate-700 rounded-full font-semibold text-sm border border-slate-300 shadow-xs transition-all hover:border-slate-400"
+                  className="px-5 sm:px-7 py-3 sm:py-3.5 bg-white hover:bg-slate-50 text-slate-700 rounded-full font-semibold text-xs sm:text-sm border border-slate-300 shadow-xs transition-all hover:border-slate-400"
                 >
                   <span>Sell on A2Z</span>
                 </Link>
               </div>
 
               {/* Trust Pillars Checklist */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-200/80 text-xs font-semibold text-slate-600">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-3 sm:pt-4 border-t border-slate-200/80 text-[11px] sm:text-xs font-semibold text-slate-600">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>100% Genuine</span>
@@ -239,7 +239,7 @@ export default function LandingPage() {
               {/* 1. Interactive Product (Drops from top) */}
               <div 
                 key={`product-container-${heroCatIndex}`}
-                className="relative z-10 w-full h-[320px] sm:h-[380px] flex items-center justify-center animate-product-enter"
+                className="relative z-10 w-full h-[220px] sm:h-[300px] lg:h-[380px] flex items-center justify-center animate-product-enter"
               >
                 <Link
                   to={`/product/${currentItem.id}`}
@@ -250,23 +250,23 @@ export default function LandingPage() {
                   <img
                     src={currentItem.image}
                     alt={currentItem.name}
-                    className="max-h-[280px] sm:max-h-[340px] w-auto max-w-[85%] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.18)] group-hover:scale-105 group-hover:-translate-y-2 transition-all duration-500"
+                    className="max-h-[190px] sm:max-h-[260px] lg:max-h-[340px] w-auto max-w-[85%] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.18)] group-hover:scale-105 group-hover:-translate-y-2 transition-all duration-500"
                   />
 
                   {/* Soft Radial Ambient Shadow beneath the product */}
-                  <div className="w-48 sm:w-64 h-5 bg-slate-400/25 rounded-full blur-lg mt-2 group-hover:w-56 group-hover:bg-slate-400/35 transition-all duration-500" />
+                  <div className="w-40 sm:w-64 h-4 sm:h-5 bg-slate-400/25 rounded-full blur-lg mt-1 sm:mt-2 group-hover:w-48 sm:group-hover:w-56 group-hover:bg-slate-400/35 transition-all duration-500" />
                 </Link>
               </div>
 
               {/* 2. Split Category Typography in Red (Below product) */}
               <div 
                 key={`split-text-${heroCatIndex}`}
-                className="relative z-0 flex items-center justify-center pointer-events-none select-none -mt-3 px-2"
+                className="relative z-0 flex items-center justify-center pointer-events-none select-none -mt-2 sm:-mt-3 px-2"
               >
-                <span className="nike-stroke-red text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic tracking-wide uppercase leading-none animate-split-left inline-block">
+                <span className="nike-stroke-red text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic tracking-wide uppercase leading-none animate-split-left inline-block">
                   {splitLeftWord}
                 </span>
-                <span className="nike-stroke-red text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic tracking-wide uppercase leading-none animate-split-right inline-block ml-1">
+                <span className="nike-stroke-red text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic tracking-wide uppercase leading-none animate-split-right inline-block ml-1">
                   {splitRightWord}
                 </span>
               </div>
@@ -279,12 +279,12 @@ export default function LandingPage() {
 
       {/* 2. Category Quick Navigation Bar */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-6">
-          <h2 className="text-2xl font-black text-slate-900 font-['Outfit']">Shop by Category</h2>
-          <p className="text-xs text-slate-500 mt-0.5">Explore our most popular departments with verified sellers</p>
+        <div className="mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-['Outfit']">Shop by Category</h2>
+          <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">Explore our most popular departments with verified sellers</p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6 sm:gap-8 justify-items-center">
+        <div className="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-6 lg:gap-8 justify-items-center">
           {CATEGORIES.filter((c) => c.id !== 'all').map((cat) => {
             const thumbImg = categoryThumbnails[cat.id] || cat.banner;
 
@@ -295,7 +295,7 @@ export default function LandingPage() {
                 className="group flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:-translate-y-1.5 focus:outline-none"
               >
                 {/* Large Plain Image Thumbnail - No Box, No Outer Border */}
-                <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-slate-100 shadow-sm group-hover:shadow-lg transition-all duration-300">
+                <div className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-slate-100 shadow-xs group-hover:shadow-lg transition-all duration-300">
                   <img
                     src={thumbImg}
                     alt={cat.name}
@@ -304,7 +304,7 @@ export default function LandingPage() {
                   />
                 </div>
                 {/* Only Category Name */}
-                <span className="mt-2.5 font-semibold text-xs text-slate-800 group-hover:text-blue-600 transition-colors block text-center truncate max-w-[110px]">
+                <span className="mt-1.5 sm:mt-2.5 font-semibold text-[11px] sm:text-xs text-slate-800 group-hover:text-blue-600 transition-colors block text-center truncate max-w-[75px] sm:max-w-[110px]">
                   {cat.name.split(' & ')[0]}
                 </span>
               </button>
