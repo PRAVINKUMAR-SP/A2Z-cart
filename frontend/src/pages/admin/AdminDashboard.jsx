@@ -23,6 +23,8 @@ import {
   ArrowUpRight,
   UserCheck,
   DollarSign,
+  Smartphone,
+  Download,
   QrCode,
   CheckCircle2,
   Clock,
@@ -799,6 +801,16 @@ export default function AdminDashboard() {
             </div>
 
             <div className="flex items-center gap-2">
+              <a
+                href="/a2z-cart.apk"
+                download="A2Z-cart.apk"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg text-xs font-bold shadow-xs transition-all"
+                title="Download Android APK"
+              >
+                <Smartphone className="w-3.5 h-3.5" />
+                <span>Download App</span>
+              </a>
+
               <button
                 onClick={fetchData}
                 disabled={loading}

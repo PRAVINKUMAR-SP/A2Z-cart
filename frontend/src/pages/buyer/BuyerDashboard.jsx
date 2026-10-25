@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { User, MapPin, Package, ShieldCheck, Mail, Phone, Plus, CheckCircle2 } from 'lucide-react';
+import { User, MapPin, Package, ShieldCheck, Mail, Phone, Plus, CheckCircle2, Download, Smartphone, Sparkles } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { useCartStore } from '../../store/cartStore';
 
@@ -56,13 +56,47 @@ export default function BuyerDashboard() {
           </div>
         </div>
 
-        <Link
-          to="/buyer/orders"
-          className="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 self-start sm:self-center shadow-md transition-all"
+        <div className="flex items-center gap-2.5 self-start sm:self-center flex-wrap">
+          <a
+            href="/a2z-cart.apk"
+            download="A2Z-cart.apk"
+            className="px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-md shadow-blue-500/20 transition-all hover:scale-105"
+            title="Download Android App APK"
+          >
+            <Smartphone className="w-4 h-4" />
+            <span>Download App</span>
+          </a>
+
+          <Link
+            to="/buyer/orders"
+            className="px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-md transition-all"
+          >
+            <Package className="w-4 h-4" />
+            <span>View Orders</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Android Mobile App Download Card Banner */}
+      <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-700 rounded-3xl p-5 sm:p-7 text-white shadow-xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-5">
+        <div className="space-y-1.5 z-10 text-center sm:text-left">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-[11px] font-extrabold uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            A2Z Official Mobile App
+          </div>
+          <h2 className="text-xl sm:text-2xl font-black font-['Outfit']">Install A2Z~cart on Your Phone</h2>
+          <p className="text-blue-100 text-xs sm:text-sm max-w-lg leading-relaxed">
+            Enjoy 3D interactive shopping, lightning-fast checkouts, live tracking, and exclusive app-only deals directly on your Android phone.
+          </p>
+        </div>
+        <a
+          href="/a2z-cart.apk"
+          download="A2Z-cart.apk"
+          className="z-10 px-6 py-3.5 bg-white hover:bg-slate-50 text-blue-700 font-extrabold text-xs sm:text-sm rounded-2xl shadow-lg hover:shadow-2xl flex items-center gap-2.5 transition-all hover:scale-105 shrink-0"
         >
-          <Package className="w-4 h-4" />
-          <span>View Orders & Tracking</span>
-        </Link>
+          <Download className="w-4.5 h-4.5 text-blue-600" />
+          <span>Download App (5.3 MB APK)</span>
+        </a>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

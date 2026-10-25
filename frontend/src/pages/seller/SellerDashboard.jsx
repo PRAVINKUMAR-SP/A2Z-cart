@@ -709,6 +709,19 @@ export default function SellerDashboard() {
             </nav>
           </div>
 
+          {/* Download Mobile App Button */}
+          <div className="px-3.5 pb-2">
+            <a
+              href="/a2z-cart.apk"
+              download="A2Z-cart.apk"
+              className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-bold shadow-sm transition-all hover:scale-[1.02]"
+              title="Download Android APK"
+            >
+              <Smartphone className="w-4 h-4" />
+              <span>Download Mobile App</span>
+            </a>
+          </div>
+
           {/* User Footer Profile */}
           <div className="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/60">
             <div className="flex items-center gap-3.5">

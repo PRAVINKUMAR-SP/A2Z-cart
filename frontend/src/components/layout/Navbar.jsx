@@ -184,13 +184,25 @@ export default function Navbar() {
                 </Link>
               </div>
             ) : (
-              <Link
-                to="/login"
-                className="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2"
-              >
-                <User className="w-4 h-4" />
-                <span>Sign In</span>
-              </Link>
+              <div className="flex items-center gap-2">
+                <a
+                  href="/a2z-cart.apk"
+                  download="A2Z-cart.apk"
+                  className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-blue-600 text-xs font-bold transition-all flex items-center gap-1.5 border border-slate-200 shadow-2xs"
+                  title="Download Official Android App APK"
+                >
+                  <Download className="w-3.5 h-3.5 text-blue-600" />
+                  <span className="hidden xs:inline">Download App</span>
+                  <span className="xs:hidden">App</span>
+                </a>
+                <Link
+                  to="/login"
+                  className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5"
+                >
+                  <User className="w-3.5 h-3.5" />
+                  <span>Sign In</span>
+                </Link>
+              </div>
             )}
           </div>
         </div>

@@ -25,6 +25,7 @@ dist-ssr
 
 # Android build artifacts
 *.apk
+!public/a2z-cart.apk
 local.properties
 .gradle/
 **/build/

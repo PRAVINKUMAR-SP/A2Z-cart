@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowRight, Sparkles, ShieldCheck, Zap, Truck, Star, 
   Store, ShoppingBag, Eye, TrendingUp, CheckCircle2,
-  Clock, Heart, ShoppingCart, Tag, RotateCcw
+  Clock, Heart, ShoppingCart, Tag, RotateCcw, Download, Smartphone
 } from 'lucide-react';
 import ProductCard from '../../components/product/ProductCard';
 import { useProductStore } from '../../store/productStore';
@@ -203,6 +203,16 @@ export default function LandingPage() {
                   <span>Start Shopping</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
+
+                <a
+                  href="/a2z-cart.apk"
+                  download="A2Z-cart.apk"
+                  className="px-5 sm:px-6 py-3 sm:py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-full font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-emerald-600/20 transition-all hover:scale-[1.02]"
+                  title="Download Official Android App APK"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download App</span>
+                </a>
 
                 <Link
                   to="/seller-onboarding"
@@ -668,7 +678,82 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* 12. Dedicated Mobile App Download Showcase Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8">
+        <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 rounded-3xl p-6 sm:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+          {/* Ambient Glows */}
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
 
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-8 space-y-4 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold uppercase tracking-wider">
+                <Smartphone className="w-4 h-4 text-blue-400" />
+                <span>Official Mobile App Available</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-4xl font-black font-['Outfit'] tracking-tight">
+                Shop on the Go with the <br className="hidden sm:inline" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-violet-400">
+                  A2Z~cart Android App
+                </span>
+              </h2>
+
+              <p className="text-slate-300 text-xs sm:text-base max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Enjoy a native, fluid mobile experience with 3D product previews, real-time shipment updates, quick-access cart, and exclusive app-only deals.
+              </p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-left text-xs font-semibold text-slate-300 max-w-lg mx-auto lg:mx-0">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>3D Spatial Models</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Cloud Cart Sync</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Express Checkout</span>
+                </div>
+              </div>
+
+              <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                <a
+                  href="/a2z-cart.apk"
+                  download="A2Z-cart.apk"
+                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-sm rounded-2xl shadow-xl shadow-blue-600/30 flex items-center gap-3.5 transition-all hover:scale-105"
+                >
+                  <Download className="w-5 h-5 text-white animate-bounce" />
+                  <div className="text-left leading-tight">
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-blue-200">Direct Download</p>
+                    <p className="text-sm font-black">Download Android APK (5.3 MB)</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:col-span-4 flex items-center justify-center">
+              <div className="relative w-52 sm:w-60 h-[320px] sm:h-[380px] bg-slate-800/80 rounded-[36px] p-3 border-4 border-slate-700 shadow-2xl flex flex-col items-center justify-between">
+                <div className="w-20 h-4 bg-slate-900 rounded-full mb-2" />
+                <div className="flex-1 w-full bg-slate-900/90 rounded-2xl p-4 flex flex-col items-center justify-center text-center space-y-3">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg">
+                    <ShoppingBag className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-black text-white font-['Outfit']">A2Z~cart</p>
+                    <p className="text-[10px] text-blue-300">Android Edition v1.0</p>
+                  </div>
+                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+                    Live Cloud Sync
+                  </span>
+                </div>
+                <div className="w-12 h-1 bg-slate-600 rounded-full mt-2" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
     </div>
   );
