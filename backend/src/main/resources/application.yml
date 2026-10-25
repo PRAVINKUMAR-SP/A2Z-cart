@@ -1,0 +1,76 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: a2z-cart-backend
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:rds}
+  datasource:
+    url: ${DB_URL:jdbc:h2:file:./data/a2zcart_db;DB_CLOSE_DELAY=-1}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+
+# Security & JWT Configuration
+app:
+  jwt:
+    secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+    expiration-ms: 86400000 # 24 hours
+  cors:
+    allowed-origins: "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173"
+
+# Razorpay Sandbox Credentials
+razorpay:
+  key-id: ${RAZORPAY_KEY_ID:rzp_test_placeholder_key}
+  key-secret: ${RAZORPAY_KEY_SECRET:rzp_test_placeholder_secret}
+  webhook-secret: ${RAZORPAY_WEBHOOK_SECRET:rzp_webhook_secret}
+
+---
+# PostgreSQL Local Profile
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    url: jdbc:postgresql://localhost:5432/a2zcart_db
+    username: postgres
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+---
+# AWS RDS PostgreSQL Profile
+spring:
+  config:
+    activate:
+      on-profile: rds
+  datasource:
+    url: ${RDS_URL:jdbc:postgresql://a2z.cn4k6qwks3p5.ap-south-1.rds.amazonaws.com:5432/postgres?sslmode=verify-full&sslrootcert=./global-bundle.pem}
+    username: ${RDS_USERNAME:a2z}
+    password: ${RDS_PASSWORD:pravin007}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect

@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Java & Maven
+target/
+*.class
+*.jar
+*.war
+.idea/
+*.iml
+.vscode/
+
+# Local database
+backend/data/
+*.db
+
+# Logs & temp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+backend-tools/

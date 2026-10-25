@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-navy: #142D4E;
+    --brand-blue: #2563EB;
+    --brand-violet: #7C3AED;
+    --brand-emerald: #10B981;
+    --brand-amber: #F59E0B;
+    --brand-bg: #F8FAFC;
+  }
+
+  body {
+    background-color: var(--brand-bg);
+    color: #1E293B;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-panel-dark {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #142D4E 0%, #2563EB 50%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #B45309 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-hover-glow {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover-glow:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.12), 0 8px 10px -6px rgba(37, 99, 235, 0.08);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes gradientSweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.welcome-gradient-text {
+  background: linear-gradient(
+    135deg,
+    #0F172A 0%,
+    #2563EB 28%,
+    #7C3AED 52%,
+    #2563EB 76%,
+    #0F172A 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientSweep 4s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.animate-gentle-float {
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+/* Nike-Style Red Stroke & Fill Typography */
+.nike-stroke-red {
+  color: #EF4444;
+  -webkit-text-stroke: 1.5px #EF4444;
+  user-select: none;
+  filter: drop-shadow(0 4px 14px rgba(239, 68, 68, 0.2));
+}
+
+@keyframes nikeSplitLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-140%) skewX(-14deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(12px) skewX(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) skewX(0);
+  }
+}
+
+.animate-split-left {
+  animation: nikeSplitLeft 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes nikeSplitRight {
+  0% {
+    opacity: 0;
+    transform: translateX(140%) skewX(14deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(-12px) skewX(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) skewX(0);
+  }
+}
+
+.animate-split-right {
+  animation: nikeSplitRight 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes nikeProductEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(-120px) scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(10px) scale(1.02);
+  }
+  80% {
+    transform: translateY(-5px) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-product-enter {
+  animation: nikeProductEnter 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.28s backwards;
+}
+
+
+
+
