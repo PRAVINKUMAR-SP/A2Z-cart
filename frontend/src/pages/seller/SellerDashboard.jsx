@@ -75,7 +75,7 @@ export default function SellerDashboard() {
 
   const fetchSellerCommissions = async () => {
     try {
-      const res = await fetch(`http://localhost:8085/api/commissions/seller?sellerName=${encodeURIComponent(currentStoreName)}`);
+      const res = await fetch(`/api/commissions/seller?sellerName=${encodeURIComponent(currentStoreName)}`);
       if (res.ok) {
         const data = await res.json();
         setCommissionData(data);
@@ -97,7 +97,7 @@ export default function SellerDashboard() {
     }
     setIsSubmittingCommission(true);
     try {
-      const res = await fetch('http://localhost:8085/api/commissions/seller/pay', {
+      const res = await fetch('/api/commissions/seller/pay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

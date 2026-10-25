@@ -29,7 +29,7 @@ export const useOrderStore = create(
           const queryParams = numericUserId
             ? `userId=${numericUserId}&email=${encodeURIComponent(user.email || '')}`
             : `email=${encodeURIComponent(user.email || '')}`;
-          const res = await fetch(`http://localhost:8085/api/orders?${queryParams}`);
+          const res = await fetch(`/api/orders?${queryParams}`);
           if (res.ok) {
             const data = await res.json();
             // Transform DB orders into rich order objects expected by UI
@@ -208,7 +208,7 @@ export const useOrderStore = create(
             productDetails: items,
           };
 
-          const res = await fetch('http://localhost:8085/api/orders', {
+          const res = await fetch('/api/orders', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dbPayload),
@@ -248,7 +248,7 @@ export const useOrderStore = create(
         const order = get().orders.find((o) => o.id === orderId);
         if (order?.dbId) {
           try {
-            await fetch(`http://localhost:8085/api/orders/${order.dbId}/status`, {
+            await fetch(`/api/orders/${order.dbId}/status`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ status: 'CANCELLED' }),

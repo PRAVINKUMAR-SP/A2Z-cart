@@ -76,7 +76,7 @@ export const useCartStore = create(
         set({ isCartLoading: true, cartOwnerEmail: normalizedEmail });
         try {
           const queryParams = `email=${encodeURIComponent(normalizedEmail)}`;
-          const res = await fetch(`http://localhost:8085/api/cart?${queryParams}`);
+          const res = await fetch(`/api/cart?${queryParams}`);
           if (res.ok) {
             const data = await res.json();
             // ALWAYS set items to what is in this particular user's DB cart!
@@ -153,7 +153,7 @@ export const useCartStore = create(
         // Persist productId, quantity, and productCount strictly for this particular user to PostgreSQL DB
         if (activeUser && normalizedEmail) {
           const numericUserId = activeUser.id && !isNaN(Number(activeUser.id)) ? Number(activeUser.id) : null;
-          fetch('http://localhost:8085/api/cart', {
+          fetch('/api/cart', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -195,7 +195,7 @@ export const useCartStore = create(
         // Update in PostgreSQL Database strictly for this particular user
         if (activeUser && normalizedEmail) {
           const numericUserId = activeUser.id && !isNaN(Number(activeUser.id)) ? Number(activeUser.id) : null;
-          fetch('http://localhost:8085/api/cart', {
+          fetch('/api/cart', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -223,7 +223,7 @@ export const useCartStore = create(
           const queryParams = numericUserId
             ? `userId=${numericUserId}&email=${encodeURIComponent(normalizedEmail)}`
             : `email=${encodeURIComponent(normalizedEmail)}`;
-          fetch(`http://localhost:8085/api/cart/${productId}?${queryParams}`, {
+          fetch(`/api/cart/${productId}?${queryParams}`, {
             method: 'DELETE',
           }).catch((err) => console.error('Failed to remove cart item from DB:', err));
         }
@@ -241,7 +241,7 @@ export const useCartStore = create(
           const queryParams = numericUserId
             ? `userId=${numericUserId}&email=${encodeURIComponent(normalizedEmail)}`
             : `email=${encodeURIComponent(normalizedEmail)}`;
-          fetch(`http://localhost:8085/api/cart/clear?${queryParams}`, {
+          fetch(`/api/cart/clear?${queryParams}`, {
             method: 'DELETE',
           }).catch((err) => console.error('Failed to clear cart in DB:', err));
         }
@@ -259,7 +259,7 @@ export const useCartStore = create(
           const queryParams = numericUserId
             ? `userId=${numericUserId}&email=${encodeURIComponent(user.email || '')}`
             : `email=${encodeURIComponent(user.email || '')}`;
-          const res = await fetch(`http://localhost:8085/api/addresses?${queryParams}`);
+          const res = await fetch(`/api/addresses?${queryParams}`);
           if (res.ok) {
             const data = await res.json();
             const currentSelected = get().selectedAddress;
@@ -296,7 +296,7 @@ export const useCartStore = create(
           isDefault: addressData.isDefault ?? true,
         };
 
-        const res = await fetch('http://localhost:8085/api/addresses', {
+        const res = await fetch('/api/addresses', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
@@ -319,7 +319,7 @@ export const useCartStore = create(
 
       deleteAddressFromDb: async (id) => {
         try {
-          await fetch(`http://localhost:8085/api/addresses/${id}`, { method: 'DELETE' });
+          await fetch(`/api/addresses/${id}`, { method: 'DELETE' });
           const updated = get().savedAddresses.filter((a) => a.id !== id);
           set({
             savedAddresses: updated,
@@ -336,7 +336,7 @@ export const useCartStore = create(
           const queryParams = numericUserId
             ? `userId=${numericUserId}&email=${encodeURIComponent(user?.email || '')}`
             : (user?.email ? `email=${encodeURIComponent(user.email)}` : '');
-          await fetch(`http://localhost:8085/api/addresses/${id}/default?${queryParams}`, { method: 'PUT' });
+          await fetch(`/api/addresses/${id}/default?${queryParams}`, { method: 'PUT' });
           const updated = get().savedAddresses.map((a) => ({
             ...a,
             isDefault: a.id === id,

@@ -20,7 +20,7 @@ export const useProductStore = create(
 
       fetchProductsFromDb: async () => {
         try {
-          const res = await fetch('http://localhost:8085/api/products');
+          const res = await fetch('/api/products');
           if (res.ok) {
             const data = await res.json();
             if (Array.isArray(data) && data.length > 0) {
@@ -67,7 +67,7 @@ export const useProductStore = create(
 
         // Asynchronously sync to backend PostgreSQL database
         try {
-          fetch('http://localhost:8085/api/products', {
+          fetch('/api/products', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

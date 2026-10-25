@@ -132,7 +132,7 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       // 1. All Users (for role management & directory)
-      fetch('http://localhost:8085/api/admin/users')
+      fetch('/api/admin/users')
         .then((res) => (res.ok ? res.json() : []))
         .then((data) => {
           if (Array.isArray(data) && data.length > 0) {
@@ -152,7 +152,7 @@ export default function AdminDashboard() {
         .catch(() => {});
 
       // 2. Admins list
-      fetch('http://localhost:8085/api/admin/admins')
+      fetch('/api/admin/admins')
         .then((res) => (res.ok ? res.json() : []))
         .then((data) => {
           if (Array.isArray(data) && data.length > 0) setAdmins(data);
@@ -165,7 +165,7 @@ export default function AdminDashboard() {
         .catch(() => {});
 
       // 3. Cart Products
-      fetch('http://localhost:8085/api/admin/cart-products')
+      fetch('/api/admin/cart-products')
         .then((res) => (res.ok ? res.json() : []))
         .then((data) => {
           if (Array.isArray(data)) setCartProducts(data);
@@ -173,7 +173,7 @@ export default function AdminDashboard() {
         .catch(() => {});
 
       // 4. Orders
-      fetch('http://localhost:8085/api/admin/orders')
+      fetch('/api/admin/orders')
         .then((res) => (res.ok ? res.json() : []))
         .then((data) => {
           if (Array.isArray(data) && data.length > 0) setLiveOrders(data);
@@ -184,7 +184,7 @@ export default function AdminDashboard() {
         });
 
       // 5. Order Products
-      fetch('http://localhost:8085/api/admin/order-products')
+      fetch('/api/admin/order-products')
         .then((res) => (res.ok ? res.json() : []))
         .then((data) => {
           if (Array.isArray(data) && data.length > 0) setOrderProducts(data);
@@ -215,7 +215,7 @@ export default function AdminDashboard() {
         })
         .catch(() => {});
       // 6. Platform Commission Invoices & Admin Payment Config
-      fetch('http://localhost:8085/api/commissions/admin')
+      fetch('/api/commissions/admin')
         .then((res) => (res.ok ? res.json() : null))
         .then((data) => {
           if (data) {
@@ -233,7 +233,7 @@ export default function AdminDashboard() {
         .catch(() => {});
 
       // 7. Backend Sellers list
-      fetch('http://localhost:8085/api/admin/sellers')
+      fetch('/api/admin/sellers')
         .then((res) => (res.ok ? res.json() : []))
         .then((data) => {
           if (Array.isArray(data) && data.length > 0) {
@@ -253,7 +253,7 @@ export default function AdminDashboard() {
 
   const handleVerifyCommission = async (id) => {
     try {
-      const res = await fetch(`http://localhost:8085/api/commissions/admin/${id}/verify`, {
+      const res = await fetch(`/api/commissions/admin/${id}/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ notes: 'Verified in Admin Bank Account' }),
@@ -269,7 +269,7 @@ export default function AdminDashboard() {
 
   const handleRejectCommission = async (id) => {
     try {
-      const res = await fetch(`http://localhost:8085/api/commissions/admin/${id}/reject`, {
+      const res = await fetch(`/api/commissions/admin/${id}/reject`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reason: 'UTR not matching bank statement' }),
@@ -287,7 +287,7 @@ export default function AdminDashboard() {
     e.preventDefault();
     setIsSavingAdminUpi(true);
     try {
-      const res = await fetch('http://localhost:8085/api/commissions/config', {
+      const res = await fetch('/api/commissions/config', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(adminUpiForm),
@@ -454,7 +454,7 @@ export default function AdminDashboard() {
 
     // 2. Sync to PostgreSQL backend
     try {
-      await fetch('http://localhost:8085/api/products', {
+      await fetch('/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -509,7 +509,7 @@ export default function AdminDashboard() {
         setInspectBuyer((prev) => ({ ...prev, role: normalizedRole }));
       }
 
-      const res = await fetch(`http://localhost:8085/api/admin/users/${userId}/role`, {
+      const res = await fetch(`/api/admin/users/${userId}/role`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role: normalizedRole }),
@@ -529,7 +529,7 @@ export default function AdminDashboard() {
   // Actions
   const handleApproveSeller = (id) => {
     approveApplication(id, 'Approved by Administrator');
-    fetch(`http://localhost:8085/api/admin/sellers/${id}/approve`, {
+    fetch(`/api/admin/sellers/${id}/approve`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ notes: 'Approved by Administrator' }),
@@ -544,7 +544,7 @@ export default function AdminDashboard() {
       return;
     }
     rejectApplication(id, rejectReason);
-    fetch(`http://localhost:8085/api/admin/sellers/${id}/reject`, {
+    fetch(`/api/admin/sellers/${id}/reject`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ reason: rejectReason }),
@@ -556,7 +556,7 @@ export default function AdminDashboard() {
 
   const handleDeleteSeller = (id, companyName) => {
     deleteApplication(id);
-    fetch(`http://localhost:8085/api/admin/sellers/${id}`, {
+    fetch(`/api/admin/sellers/${id}`, {
       method: 'DELETE',
     }).catch(() => {});
     toast.success(`Seller "${companyName || id}" deleted`);
@@ -572,7 +572,7 @@ export default function AdminDashboard() {
     );
     const target = liveOrders.find((o) => o.orderTrackingNumber === orderId || o.id === orderId);
     if (target?.id && typeof target.id === 'number') {
-      fetch(`http://localhost:8085/api/orders/${target.id}/status`, {
+      fetch(`/api/orders/${target.id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -583,13 +583,13 @@ export default function AdminDashboard() {
 
   const handleDeleteProduct = (id) => {
     deleteProduct(id);
-    fetch(`http://localhost:8085/api/admin/products/${id}`, { method: 'DELETE' }).catch(() => {});
+    fetch(`/api/admin/products/${id}`, { method: 'DELETE' }).catch(() => {});
     toast.success('Product deleted');
   };
 
   const handleClearAllProducts = () => {
     clearAllProducts();
-    fetch('http://localhost:8085/api/admin/products', { method: 'DELETE' }).catch(() => {});
+    fetch('/api/admin/products', { method: 'DELETE' }).catch(() => {});
     toast.success('All products removed from catalog');
   };
 
@@ -602,7 +602,7 @@ export default function AdminDashboard() {
     }
 
     try {
-      const res = await fetch(`http://localhost:8085/api/admin/users/${id}`, {
+      const res = await fetch(`/api/admin/users/${id}`, {
         method: 'DELETE',
       });
       if (!res.ok) {
