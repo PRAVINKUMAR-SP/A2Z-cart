@@ -1,0 +1,57 @@
+name: Auto Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy application via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          timeout: 180s
+          script_stop: true
+          script: |
+            # 1. Load environment variables (NVM & Node 20)
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+            echo "🚀 1. Syncing latest repository changes..."
+            cd /home/ec2-user/A2Z-cart
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "📦 2. Building & Deploying Frontend..."
+            cd /home/ec2-user/A2Z-cart/frontend
+            npm install --legacy-peer-deps
+            npm run build
+            sudo cp -r dist/* /var/www/a2z-cart/
+            sudo chmod -R 755 /var/www/a2z-cart
+            sudo chown -R nginx:nginx /var/www/a2z-cart
+
+            echo "☕ 3. Building & Deploying Backend..."
+            cd /home/ec2-user/A2Z-cart/backend
+            chmod +x mvnw
+            ./mvnw clean package -DskipTests
+
+            echo "🔄 4. Restarting Services..."
+            if systemctl is-active --quiet a2z-backend; then
+              sudo systemctl restart a2z-backend
+            else
+              pkill -f 'backend-0.0.1-SNAPSHOT.jar' || true
+              sleep 2
+              nohup java -jar target/backend-0.0.1-SNAPSHOT.jar --spring.profiles.active=rds > /home/ec2-user/backend.log 2>&1 &
+            fi
+
+            sudo systemctl restart nginx
+
+            echo "✅ Deployment finished successfully! Site is live."

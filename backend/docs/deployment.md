@@ -220,3 +220,26 @@ sudo apt install -y certbot python3-certbot-nginx
 sudo certbot --nginx -d your-domain.com -d www.your-domain.com
 ```
 Certbot will automatically configure HTTPS on port 443 and auto-renew certificates.
+
+---
+
+## 5. Automated CI/CD Deployment with GitHub Actions
+
+Whenever you run `git push origin main`, GitHub Actions automatically connects to your EC2 instance via SSH, pulls the latest code, builds both the React frontend and Spring Boot backend, and restarts Nginx.
+
+### Required GitHub Secrets:
+Navigate to your GitHub Repository: **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
+
+| Secret Name | Value | Description |
+| :--- | :--- | :--- |
+| `EC2_HOST` | `15.206.84.110` (or Elastic IP) | Public IP address of your EC2 instance |
+| `EC2_USER` | `ec2-user` | Amazon Linux 2023 default user |
+| `EC2_SSH_KEY` | Contents of `your-key.pem` | Private SSH Key (including `-----BEGIN ...-----` and `-----END ...-----`) |
+
+### Workflow Configuration:
+The workflow is defined at [deploy.yml](file:///.github/workflows/deploy.yml). Every push to `main` executes:
+1. `git fetch origin main && git reset --hard origin/main`
+2. `npm install --legacy-peer-deps && npm run build` (deploys to `/var/www/a2z-cart`)
+3. `./mvnw clean package -DskipTests` (recompiles JAR)
+4. Restarts `a2z-backend` and `nginx` services.
+
