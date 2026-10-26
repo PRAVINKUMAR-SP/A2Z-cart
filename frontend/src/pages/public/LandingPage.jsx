@@ -727,7 +727,7 @@ export default function LandingPage() {
                   <Download className="w-5 h-5 text-white animate-bounce" />
                   <div className="text-left leading-tight">
                     <p className="text-[10px] uppercase font-bold tracking-wider text-blue-200">Direct Download</p>
-                    <p className="text-sm font-black">Download Android APK (5.3 MB)</p>
+                    <p className="text-sm font-black">Download Android APK (Auto-Update)</p>
                   </div>
                 </a>
               </div>

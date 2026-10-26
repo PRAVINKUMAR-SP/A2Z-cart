@@ -95,7 +95,7 @@ export default function BuyerDashboard() {
           className="z-10 px-6 py-3.5 bg-white hover:bg-slate-50 text-blue-700 font-extrabold text-xs sm:text-sm rounded-2xl shadow-lg hover:shadow-2xl flex items-center gap-2.5 transition-all hover:scale-105 shrink-0"
         >
           <Download className="w-4.5 h-4.5 text-blue-600" />
-          <span>Download App (5.3 MB APK)</span>
+          <span>Download App (Official APK)</span>
         </a>
       </div>
 

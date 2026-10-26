@@ -3,6 +3,7 @@
   "appName": "A2Z-cart",
   "webDir": "dist",
   "server": {
+    "url": "http://15.206.84.110",
     "androidScheme": "http",
     "cleartext": true,
     "allowNavigation": [
