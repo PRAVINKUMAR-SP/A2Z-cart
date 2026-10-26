@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { 
   ShoppingCart, Search, User, ShieldCheck, Store, 
   Menu, X, Sparkles, ChevronDown, Package, ArrowRight, LogOut, CheckCircle2, Clock, ExternalLink,
-  ShoppingBag, Check
+  ShoppingBag, Check, Download
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { useCartStore } from '../../store/cartStore';
