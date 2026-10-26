@@ -180,82 +180,83 @@ export default function LandingPage() {
   const splitRightWord = currentWatermark.slice(splitMid);
 
   return (
-    <div className="w-full bg-[#FAFBFD] text-slate-800 pb-24 space-y-16">
+    <div className="w-full bg-[#FAFBFD] text-slate-800 pb-16 sm:pb-24 space-y-8 sm:space-y-16">
 
       {/* 1. Human-Crafted Marketplace Hero Banner */}
-      <section className="w-full min-h-0 lg:min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] py-6 sm:py-8 lg:py-0 bg-gradient-to-b from-blue-50/70 via-indigo-50/30 to-[#FAFBFD] border-b border-slate-200/60 flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
+      <section className="w-full min-h-0 lg:min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] py-5 sm:py-8 lg:py-0 bg-gradient-to-b from-blue-50/70 via-indigo-50/30 to-[#FAFBFD] border-b border-slate-200/60 flex items-center">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 lg:gap-10 items-center">
             
             {/* Left Promotional Content */}
-            <div className="lg:col-span-6 space-y-4 sm:space-y-6">
+            <div className="lg:col-span-6 space-y-3.5 sm:space-y-6">
 
-              <h1 className="text-2.5xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 font-['Outfit'] leading-[1.1]">
+              <h1 className="text-2xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 font-['Outfit'] leading-[1.1]">
                 Everything you love, <br />
                 <span className="text-blue-600">from A to Z.</span>
               </h1>
 
-              <p className="text-slate-600 text-sm sm:text-lg max-w-xl leading-relaxed">
-                Discover millions of authentic products from India's top verified brands. From designer dresses and high-performance sneakers to solid wood furniture, smart home appliances, toys, and sports gear.
+              <p className="text-slate-600 text-xs sm:text-base lg:text-lg max-w-xl leading-relaxed">
+                <span className="sm:hidden">Discover top verified Indian brands across fashion, footwear, electronics & home.</span>
+                <span className="hidden sm:inline">Discover millions of authentic products from India's top verified brands. From designer dresses and high-performance sneakers to solid wood furniture, smart home appliances, toys, and sports gear.</span>
               </p>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 pt-1 sm:pt-2">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3.5 pt-1">
                 <Link
                   to={isAuthenticated ? '/shop' : '/register'}
-                  className="px-6 sm:px-8 py-3 sm:py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.02]"
+                  className="px-4 sm:px-8 py-2.5 sm:py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.02]"
                 >
-                  <ShoppingBag className="w-4 h-4" />
+                  <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>Start Shopping</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </Link>
 
                 <a
                   href="/a2z-cart.apk"
                   download="A2Z-cart.apk"
-                  className="px-5 sm:px-6 py-3 sm:py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-full font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-emerald-600/20 transition-all hover:scale-[1.02]"
+                  className="px-4 sm:px-6 py-2.5 sm:py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-full font-bold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 shadow-lg shadow-emerald-600/20 transition-all hover:scale-[1.02]"
                   title="Download Official Android App APK"
                 >
-                  <Download className="w-4 h-4" />
+                  <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>Download App</span>
                 </a>
 
                 <Link
                   to="/seller-onboarding"
-                  className="px-5 sm:px-7 py-3 sm:py-3.5 bg-white hover:bg-slate-50 text-slate-700 rounded-full font-semibold text-xs sm:text-sm border border-slate-300 shadow-xs transition-all hover:border-slate-400"
+                  className="px-3.5 sm:px-7 py-2.5 sm:py-3.5 bg-white hover:bg-slate-50 text-slate-700 rounded-full font-semibold text-xs sm:text-sm border border-slate-300 shadow-xs transition-all hover:border-slate-400"
                 >
                   <span>Sell on A2Z</span>
                 </Link>
               </div>
 
               {/* Trust Pillars Checklist */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-3 sm:pt-4 border-t border-slate-200/80 text-[11px] sm:text-xs font-semibold text-slate-600">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-2.5 sm:pt-4 border-t border-slate-200/80 text-[10px] sm:text-xs font-semibold text-slate-600">
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
                   <span>100% Genuine</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Truck className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Free 1-Day Delivery</span>
+                  <Truck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 shrink-0" />
+                  <span><span className="sm:hidden">1-Day Delivery</span><span className="hidden sm:inline">Free 1-Day Delivery</span></span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <RotateCcw className="w-4 h-4 text-amber-600 shrink-0" />
+                  <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 shrink-0" />
                   <span>7-Day Return</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-purple-600 shrink-0" />
-                  <span>Secure Payments</span>
+                  <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600 shrink-0" />
+                  <span><span className="sm:hidden">Secure Pay</span><span className="hidden sm:inline">Secure Payments</span></span>
                 </div>
               </div>
             </div>
 
             {/* Right: Nike Split Animated Category Typography & Interactive Product Entrance */}
-            <div className="lg:col-span-6 relative flex flex-col items-center justify-center select-none py-2">
+            <div className="lg:col-span-6 relative flex flex-col items-center justify-center select-none py-1 sm:py-2">
               
               {/* 1. Interactive Product (Drops from top) */}
               <div 
                 key={`product-container-${heroCatIndex}`}
-                className="relative z-10 w-full h-[220px] sm:h-[300px] lg:h-[380px] flex items-center justify-center animate-product-enter"
+                className="relative z-10 w-full h-[180px] sm:h-[300px] lg:h-[380px] flex items-center justify-center animate-product-enter"
               >
                 <Link
                   to={isAuthenticated ? `/product/${currentItem.id}` : '/register'}
@@ -266,11 +267,11 @@ export default function LandingPage() {
                   <img
                     src={currentItem.image}
                     alt={currentItem.name}
-                    className="max-h-[190px] sm:max-h-[260px] lg:max-h-[340px] w-auto max-w-[85%] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.18)] group-hover:scale-105 group-hover:-translate-y-2 transition-all duration-500"
+                    className="max-h-[150px] sm:max-h-[260px] lg:max-h-[340px] w-auto max-w-[85%] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.18)] group-hover:scale-105 group-hover:-translate-y-2 transition-all duration-500"
                   />
 
                   {/* Soft Radial Ambient Shadow beneath the product */}
-                  <div className="w-40 sm:w-64 h-4 sm:h-5 bg-slate-400/25 rounded-full blur-lg mt-1 sm:mt-2 group-hover:w-48 sm:group-hover:w-56 group-hover:bg-slate-400/35 transition-all duration-500" />
+                  <div className="w-36 sm:w-64 h-3.5 sm:h-5 bg-slate-400/25 rounded-full blur-lg mt-1 sm:mt-2 group-hover:w-44 sm:group-hover:w-56 group-hover:bg-slate-400/35 transition-all duration-500" />
                 </Link>
               </div>
 
@@ -279,10 +280,10 @@ export default function LandingPage() {
                 key={`split-text-${heroCatIndex}`}
                 className="relative z-0 flex items-center justify-center pointer-events-none select-none -mt-2 sm:-mt-3 px-2"
               >
-                <span className="nike-stroke-red text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic tracking-wide uppercase leading-none animate-split-left inline-block">
+                <span className="nike-stroke-red text-xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic tracking-wide uppercase leading-none animate-split-left inline-block">
                   {splitLeftWord}
                 </span>
-                <span className="nike-stroke-red text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic tracking-wide uppercase leading-none animate-split-right inline-block ml-1">
+                <span className="nike-stroke-red text-xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic tracking-wide uppercase leading-none animate-split-right inline-block ml-1">
                   {splitRightWord}
                 </span>
               </div>
@@ -294,13 +295,16 @@ export default function LandingPage() {
       </section>
 
       {/* 2. Category Quick Navigation Bar */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-['Outfit']">Shop by Category</h2>
-          <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">Explore our most popular departments with verified sellers</p>
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="mb-3 sm:mb-6">
+          <h2 className="text-lg sm:text-2xl font-black text-slate-900 font-['Outfit']">Shop by Category</h2>
+          <p className="text-[10px] sm:text-xs text-slate-500 mt-0.5">
+            <span className="sm:hidden">Explore top verified departments</span>
+            <span className="hidden sm:inline">Explore our most popular departments with verified sellers</span>
+          </p>
         </div>
 
-        <div className="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-6 lg:gap-8 justify-items-center">
+        <div className="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 sm:gap-6 lg:gap-8 justify-items-center">
           {CATEGORIES.filter((c) => c.id !== 'all').map((cat) => {
             const thumbImg = categoryThumbnails[cat.id] || cat.banner;
 
@@ -311,7 +315,7 @@ export default function LandingPage() {
                 className="group flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:-translate-y-1.5 focus:outline-none"
               >
                 {/* Large Plain Image Thumbnail - No Box, No Outer Border */}
-                <div className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-slate-100 shadow-xs group-hover:shadow-lg transition-all duration-300">
+                <div className="w-13 h-13 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-slate-100 shadow-xs group-hover:shadow-lg transition-all duration-300">
                   <img
                     src={thumbImg}
                     alt={cat.name}
@@ -320,7 +324,7 @@ export default function LandingPage() {
                   />
                 </div>
                 {/* Only Category Name */}
-                <span className="mt-1.5 sm:mt-2.5 font-semibold text-[11px] sm:text-xs text-slate-800 group-hover:text-blue-600 transition-colors block text-center truncate max-w-[75px] sm:max-w-[110px]">
+                <span className="mt-1 sm:mt-2.5 font-semibold text-[10px] sm:text-xs text-slate-800 group-hover:text-blue-600 transition-colors block text-center truncate max-w-[70px] sm:max-w-[110px]">
                   {cat.name.split(' & ')[0]}
                 </span>
               </button>
@@ -330,94 +334,96 @@ export default function LandingPage() {
       </section>
 
       {/* 3. Deal of the Day / Flash Steals Strip */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-700 rounded-2xl sm:rounded-3xl p-4 sm:p-8 text-white shadow-xl relative overflow-hidden">
           
           {/* Header & Countdown */}
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/15">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6 pb-4 sm:pb-6 border-b border-white/15">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-amber-300 text-xs font-black uppercase tracking-wider">
-                <Zap className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/20 backdrop-blur-md text-amber-300 text-[10px] sm:text-xs font-black uppercase tracking-wider">
+                <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-300 text-amber-300" />
                 <span>Steal of the Day</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black font-['Outfit']">
-                Limited Stock Flash Offers — Minimum 50% Off
+              <h2 className="text-lg sm:text-3xl font-black font-['Outfit']">
+                <span className="sm:hidden">Flash Offers — Min 50% Off</span>
+                <span className="hidden sm:inline">Limited Stock Flash Offers — Minimum 50% Off</span>
               </h2>
-              <p className="text-indigo-100 text-xs sm:text-sm">
-                Extra ₹500 off at checkout with coupon code <code className="bg-white/20 px-2 py-0.5 rounded font-mono font-bold">A2ZSAVE</code>
+              <p className="text-indigo-100 text-[11px] sm:text-sm">
+                <span className="sm:hidden">Extra ₹500 off with code <code className="bg-white/20 px-1.5 py-0.5 rounded font-mono font-bold">A2ZSAVE</code></span>
+                <span className="hidden sm:inline">Extra ₹500 off at checkout with coupon code <code className="bg-white/20 px-2 py-0.5 rounded font-mono font-bold">A2ZSAVE</code></span>
               </p>
             </div>
 
             {/* Countdown Box */}
-            <div className="flex items-center gap-2.5 bg-black/35 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20">
-              <Clock className="w-4 h-4 text-amber-300 mr-1" />
+            <div className="flex items-center gap-2 bg-black/35 backdrop-blur-md px-3 py-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl border border-white/20">
+              <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 mr-0.5 sm:mr-1" />
               <div className="text-center">
-                <span className="text-xl font-black font-mono">{String(timeLeft.hours).padStart(2, '0')}</span>
-                <span className="block text-[9px] uppercase font-bold text-indigo-200">Hours</span>
+                <span className="text-base sm:text-xl font-black font-mono">{String(timeLeft.hours).padStart(2, '0')}</span>
+                <span className="block text-[8px] sm:text-[9px] uppercase font-bold text-indigo-200">Hours</span>
               </div>
-              <span className="text-lg font-bold text-indigo-200">:</span>
+              <span className="text-base sm:text-lg font-bold text-indigo-200">:</span>
               <div className="text-center">
-                <span className="text-xl font-black font-mono">{String(timeLeft.minutes).padStart(2, '0')}</span>
-                <span className="block text-[9px] uppercase font-bold text-indigo-200">Mins</span>
+                <span className="text-base sm:text-xl font-black font-mono">{String(timeLeft.minutes).padStart(2, '0')}</span>
+                <span className="block text-[8px] sm:text-[9px] uppercase font-bold text-indigo-200">Mins</span>
               </div>
-              <span className="text-lg font-bold text-indigo-200">:</span>
+              <span className="text-base sm:text-lg font-bold text-indigo-200">:</span>
               <div className="text-center">
-                <span className="text-xl font-black font-mono">{String(timeLeft.seconds).padStart(2, '0')}</span>
-                <span className="block text-[9px] uppercase font-bold text-indigo-200">Secs</span>
+                <span className="text-base sm:text-xl font-black font-mono">{String(timeLeft.seconds).padStart(2, '0')}</span>
+                <span className="block text-[8px] sm:text-[9px] uppercase font-bold text-indigo-200">Secs</span>
               </div>
             </div>
           </div>
 
           {/* Flash Deal Items Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-4 sm:pt-6">
             {flashDeals.map((product) => (
               <div
                 key={product.id}
-                className="bg-white text-slate-800 rounded-2xl p-3.5 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                className="bg-white text-slate-800 rounded-xl sm:rounded-2xl p-2.5 sm:p-3.5 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="relative h-44 rounded-xl overflow-hidden bg-slate-50 mb-3">
+                  <div className="relative h-32 sm:h-44 rounded-lg sm:rounded-xl overflow-hidden bg-slate-50 mb-2 sm:mb-3">
                     <img
                       src={product.image}
                       alt={product.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <span className="absolute top-2 left-2 bg-rose-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow-sm">
+                    <span className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 bg-rose-600 text-white text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 rounded-full shadow-sm">
                       {product.discountPercent}% OFF
                     </span>
-                    <span className="absolute top-2 right-2 bg-amber-500 text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+                    <span className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 bg-amber-500 text-slate-900 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm flex items-center gap-0.5 sm:gap-1">
                       <Star className="w-2.5 h-2.5 fill-slate-900" />
                       {product.rating}
                     </span>
                   </div>
 
-                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">
+                  <span className="text-[9px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-0.5 sm:mb-1">
                     {product.category}
                   </span>
                   <Link to={isAuthenticated ? `/product/${product.id}` : '/register'}>
-                    <h4 className="font-bold text-slate-900 text-xs line-clamp-2 hover:text-blue-600 transition-colors mb-2">
+                    <h4 className="font-bold text-slate-900 text-[11px] sm:text-xs line-clamp-2 hover:text-blue-600 transition-colors mb-1.5 sm:mb-2">
                       {product.name}
                     </h4>
                   </Link>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                <div className="pt-1.5 sm:pt-2 border-t border-slate-100 flex items-center justify-between">
                   <div>
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="text-base font-black text-slate-900 font-['Outfit']">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-xs sm:text-base font-black text-slate-900 font-['Outfit']">
                         {formatPrice(product.price)}
                       </span>
-                      <span className="text-[11px] text-slate-400 line-through">
+                      <span className="text-[9px] sm:text-[11px] text-slate-400 line-through">
                         {formatPrice(product.originalPrice)}
                       </span>
                     </div>
                   </div>
                   <Link
                     to={isAuthenticated ? `/product/${product.id}` : '/register'}
-                    className="p-2 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-colors"
+                    className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-colors"
                     title="View Deal"
                   >
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </Link>
                 </div>
               </div>
@@ -428,29 +434,30 @@ export default function LandingPage() {
       </section>
 
       {/* 4. SECTION: DRESSES & FASHION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6 pb-3 border-b border-slate-200">
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-6 pb-2.5 sm:pb-3 border-b border-slate-200">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">👗</span>
-              <h2 className="text-2xl font-black text-slate-900 font-['Outfit']">
-                Trending Dresses & Ethnic Apparel
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-lg sm:text-xl">👗</span>
+              <h2 className="text-lg sm:text-2xl font-black text-slate-900 font-['Outfit']">
+                <span className="sm:hidden">Trending Dresses</span>
+                <span className="hidden sm:inline">Trending Dresses & Ethnic Apparel</span>
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="hidden sm:block text-xs text-slate-500 mt-0.5">
               Pure Chanderi silk Anarkalis, breezy floral maxis, evening cocktail dresses & luxury linen sets
             </p>
           </div>
           <button 
             onClick={() => handleCategoryClick('dresses')}
-            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1.5"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 shrink-0"
           >
-            <span>See All Dresses</span>
+            <span><span className="sm:hidden">See All</span><span className="hidden sm:inline">See All Dresses</span></span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {dressesProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -458,29 +465,30 @@ export default function LandingPage() {
       </section>
 
       {/* 5. SECTION: SHOES & SNEAKERS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6 pb-3 border-b border-slate-200">
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-6 pb-2.5 sm:pb-3 border-b border-slate-200">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">👟</span>
-              <h2 className="text-2xl font-black text-slate-900 font-['Outfit']">
-                Footwear Spotlight: Shoes & Sneakers
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-lg sm:text-xl">👟</span>
+              <h2 className="text-lg sm:text-2xl font-black text-slate-900 font-['Outfit']">
+                <span className="sm:hidden">Shoes & Sneakers</span>
+                <span className="hidden sm:inline">Footwear Spotlight: Shoes & Sneakers</span>
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="hidden sm:block text-xs text-slate-500 mt-0.5">
               Nitrogen foam marathon runners, Italian handcrafted leather Oxfords, retro high-top canvas & trail shoes
             </p>
           </div>
           <button 
             onClick={() => handleCategoryClick('shoes')}
-            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1.5"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 shrink-0"
           >
-            <span>See All Shoes</span>
+            <span><span className="sm:hidden">See All</span><span className="hidden sm:inline">See All Shoes</span></span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {shoesProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -488,29 +496,30 @@ export default function LandingPage() {
       </section>
 
       {/* 6. SECTION: SLIPPERS & SLIDES */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6 pb-3 border-b border-slate-200">
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-6 pb-2.5 sm:pb-3 border-b border-slate-200">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">🩴</span>
-              <h2 className="text-2xl font-black text-slate-900 font-['Outfit']">
-                Everyday Comfort: Slippers & Slides
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-lg sm:text-xl">🩴</span>
+              <h2 className="text-lg sm:text-2xl font-black text-slate-900 font-['Outfit']">
+                <span className="sm:hidden">Slippers & Slides</span>
+                <span className="hidden sm:inline">Everyday Comfort: Slippers & Slides</span>
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="hidden sm:block text-xs text-slate-500 mt-0.5">
               Physiotherapist-recommended orthopedic cloud slides, leather thongs, sherpa house clogs & beach flip-flops
             </p>
           </div>
           <button 
             onClick={() => handleCategoryClick('slippers')}
-            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1.5"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 shrink-0"
           >
-            <span>See All Slippers</span>
+            <span><span className="sm:hidden">See All</span><span className="hidden sm:inline">See All Slippers</span></span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {slippersProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -518,29 +527,30 @@ export default function LandingPage() {
       </section>
 
       {/* 7. SECTION: FURNITURE & LIVING */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6 pb-3 border-b border-slate-200">
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-6 pb-2.5 sm:pb-3 border-b border-slate-200">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">🛋️</span>
-              <h2 className="text-2xl font-black text-slate-900 font-['Outfit']">
-                Living & Workspace: Premium Furniture
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-lg sm:text-xl">🛋️</span>
+              <h2 className="text-lg sm:text-2xl font-black text-slate-900 font-['Outfit']">
+                <span className="sm:hidden">Furniture & Living</span>
+                <span className="hidden sm:inline">Living & Workspace: Premium Furniture</span>
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="hidden sm:block text-xs text-slate-500 mt-0.5">
               High-back ergonomic mesh chairs, 100% seasoned Sheesham desks, velvet accent armchairs & industrial bookshelves
             </p>
           </div>
           <button 
             onClick={() => handleCategoryClick('furniture')}
-            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1.5"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 shrink-0"
           >
-            <span>See All Furniture</span>
+            <span><span className="sm:hidden">See All</span><span className="hidden sm:inline">See All Furniture</span></span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {furnitureProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -548,29 +558,30 @@ export default function LandingPage() {
       </section>
 
       {/* 8. SECTION: HOME APPLIANCES */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6 pb-3 border-b border-slate-200">
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-6 pb-2.5 sm:pb-3 border-b border-slate-200">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">☕</span>
-              <h2 className="text-2xl font-black text-slate-900 font-['Outfit']">
-                Smart Home & Kitchen Appliances
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-lg sm:text-xl">☕</span>
+              <h2 className="text-lg sm:text-2xl font-black text-slate-900 font-['Outfit']">
+                <span className="sm:hidden">Home Appliances</span>
+                <span className="hidden sm:inline">Smart Home & Kitchen Appliances</span>
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="hidden sm:block text-xs text-slate-500 mt-0.5">
               20-Bar espresso coffee machines, LiDAR robotic vacuum mops, rapid vortex air fryers & 1200W pro blenders
             </p>
           </div>
           <button 
             onClick={() => handleCategoryClick('home-appliances')}
-            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1.5"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 shrink-0"
           >
-            <span>See All Appliances</span>
+            <span><span className="sm:hidden">See All</span><span className="hidden sm:inline">See All Appliances</span></span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {applianceProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -578,29 +589,30 @@ export default function LandingPage() {
       </section>
 
       {/* 9. SECTION: TOYS & KIDS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6 pb-3 border-b border-slate-200">
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-6 pb-2.5 sm:pb-3 border-b border-slate-200">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">🧸</span>
-              <h2 className="text-2xl font-black text-slate-900 font-['Outfit']">
-                Play, Learn & Grow: Toys & Games
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-lg sm:text-xl">🧸</span>
+              <h2 className="text-lg sm:text-2xl font-black text-slate-900 font-['Outfit']">
+                <span className="sm:hidden">Toys & Games</span>
+                <span className="hidden sm:inline">Play, Learn & Grow: Toys & Games</span>
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="hidden sm:block text-xs text-slate-500 mt-0.5">
               STEM space shuttle construction kits, Montessori educational wooden cubes, 4WD stunt RC buggies & giant plush bears
             </p>
           </div>
           <button 
             onClick={() => handleCategoryClick('toys')}
-            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1.5"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 shrink-0"
           >
-            <span>See All Toys</span>
+            <span><span className="sm:hidden">See All</span><span className="hidden sm:inline">See All Toys</span></span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {toyProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -608,29 +620,30 @@ export default function LandingPage() {
       </section>
 
       {/* 10. SECTION: SPORTS & FITNESS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6 pb-3 border-b border-slate-200">
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-6 pb-2.5 sm:pb-3 border-b border-slate-200">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">🏸</span>
-              <h2 className="text-2xl font-black text-slate-900 font-['Outfit']">
-                Active Living: Sports & Fitness Gear
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-lg sm:text-xl">🏸</span>
+              <h2 className="text-lg sm:text-2xl font-black text-slate-900 font-['Outfit']">
+                <span className="sm:hidden">Sports & Fitness</span>
+                <span className="hidden sm:inline">Active Living: Sports & Fitness Gear</span>
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="hidden sm:block text-xs text-slate-500 mt-0.5">
               Laser-aligned eco rubber yoga mats, quick-dial adjustable smart dumbbells, high-modulus badminton duos & match footballs
             </p>
           </div>
           <button 
             onClick={() => handleCategoryClick('sports')}
-            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1.5"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 shrink-0"
           >
-            <span>See All Sports</span>
+            <span><span className="sm:hidden">See All</span><span className="hidden sm:inline">See All Sports</span></span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {sportProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -638,19 +651,20 @@ export default function LandingPage() {
       </section>
 
       {/* 11. Interactive Category Filter Tabs Mega Catalog */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 pt-2 sm:pt-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
           <div>
-            <h2 className="text-2xl font-black text-slate-900 font-['Outfit']">
-              Complete Marketplace Catalog
+            <h2 className="text-lg sm:text-2xl font-black text-slate-900 font-['Outfit']">
+              <span className="sm:hidden">All Products Catalog</span>
+              <span className="hidden sm:inline">Complete Marketplace Catalog</span>
             </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Showing {tabFilteredProducts.length} verified listings ready for dispatch
+            <p className="text-[10px] sm:text-xs text-slate-500 mt-0.5">
+              Showing {tabFilteredProducts.length} verified listings
             </p>
           </div>
 
           {/* Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2 p-1.5 bg-slate-100 rounded-2xl text-xs font-semibold">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 bg-slate-100 rounded-xl sm:rounded-2xl text-[11px] sm:text-xs font-semibold">
             {[
               { id: 'all', label: 'All Items' },
               { id: 'dresses', label: 'Dresses' },
@@ -665,7 +679,7 @@ export default function LandingPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-3.5 py-1.5 rounded-xl transition-all ${
+                className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg sm:rounded-xl transition-all ${
                   activeTab === tab.id
                     ? 'bg-white text-blue-600 font-bold shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
@@ -677,7 +691,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {tabFilteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -685,55 +699,59 @@ export default function LandingPage() {
       </section>
 
       {/* 12. Dedicated Mobile App Download Showcase Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8">
-        <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 rounded-3xl p-6 sm:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 pt-2 sm:pt-4 pb-4 sm:pb-8">
+        <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 rounded-2xl sm:rounded-3xl p-5 sm:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
           {/* Ambient Glows */}
           <div className="absolute -top-24 -right-24 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold uppercase tracking-wider">
-                <Smartphone className="w-4 h-4 text-blue-400" />
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
+            <div className="lg:col-span-8 space-y-3 sm:space-y-4 text-center lg:text-left">
+              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-[10px] sm:text-xs font-bold uppercase tracking-wider">
+                <Smartphone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                 <span>Official Mobile App Available</span>
               </div>
 
-              <h2 className="text-2xl sm:text-4xl font-black font-['Outfit'] tracking-tight">
-                Shop on the Go with the <br className="hidden sm:inline" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-violet-400">
-                  A2Z~cart Android App
+              <h2 className="text-xl sm:text-4xl font-black font-['Outfit'] tracking-tight">
+                <span className="sm:hidden">Get A2Z~cart Android App</span>
+                <span className="hidden sm:inline">
+                  Shop on the Go with the <br className="hidden sm:inline" />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-violet-400">
+                    A2Z~cart Android App
+                  </span>
                 </span>
               </h2>
 
               <p className="text-slate-300 text-xs sm:text-base max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Enjoy a native, fluid mobile experience with 3D product previews, real-time shipment updates, quick-access cart, and exclusive app-only deals.
+                <span className="sm:hidden">Native performance, 3D previews, live tracking & app deals.</span>
+                <span className="hidden sm:inline">Enjoy a native, fluid mobile experience with 3D product previews, real-time shipment updates, quick-access cart, and exclusive app-only deals.</span>
               </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-left text-xs font-semibold text-slate-300 max-w-lg mx-auto lg:mx-0">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>3D Spatial Models</span>
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-1 sm:pt-2 text-left text-[11px] sm:text-xs font-semibold text-slate-300 max-w-lg mx-auto lg:mx-0">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
+                  <span>3D Models</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Cloud Cart Sync</span>
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
+                  <span>Cloud Sync</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Express Checkout</span>
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
+                  <span>Fast Checkout</span>
                 </div>
               </div>
 
-              <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+              <div className="pt-2 sm:pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
                 <a
                   href="/a2z-cart.apk"
                   download="A2Z-cart.apk"
-                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-sm rounded-2xl shadow-xl shadow-blue-600/30 flex items-center gap-3.5 transition-all hover:scale-105"
+                  className="px-5 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm rounded-xl sm:rounded-2xl shadow-xl shadow-blue-600/30 flex items-center gap-2.5 sm:gap-3.5 transition-all hover:scale-105"
                 >
-                  <Download className="w-5 h-5 text-white animate-bounce" />
+                  <Download className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-bounce shrink-0" />
                   <div className="text-left leading-tight">
-                    <p className="text-[10px] uppercase font-bold tracking-wider text-blue-200">Direct Download</p>
-                    <p className="text-sm font-black">Download Android APK (Auto-Update)</p>
+                    <p className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-blue-200">Direct Download</p>
+                    <p className="text-xs sm:text-sm font-black"><span className="sm:hidden">Download Android APK</span><span className="hidden sm:inline">Download Android APK (Auto-Update)</span></p>
                   </div>
                 </a>
               </div>

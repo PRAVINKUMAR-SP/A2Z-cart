@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes';
 import { Toaster } from 'react-hot-toast';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import ScrollToTop from './components/common/ScrollToTop';
 import { useProductStore } from './store/productStore';
 
 export default function App() {
@@ -52,6 +53,7 @@ export default function App() {
           },
         }}
       />
+      <ScrollToTop />
       <ErrorBoundary>
         <AppRoutes />
       </ErrorBoundary>
