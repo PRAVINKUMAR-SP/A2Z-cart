@@ -19,6 +19,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           timeout: 180s
+          command_timeout: 20m
           script_stop: true
           script: |
             # 1. Load environment variables (NVM & Node 20)
@@ -30,10 +31,28 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
 
+            # Ensure swap space is active so npm/mvn builds never run out of RAM
+            if [ $(swapon --show | wc -l) -le 1 ]; then
+              if [ ! -f /swapfile ]; then
+                sudo fallocate -l 2G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
+                sudo chmod 600 /swapfile
+                sudo mkswap /swapfile
+              fi
+              sudo swapon /swapfile || true
+            fi
+
+            # Stop running backend temporarily to free 500MB+ RAM for build
+            echo "🛑 Stopping old backend instance to free memory for compilation..."
+            if systemctl is-active --quiet a2z-backend; then
+              sudo systemctl stop a2z-backend || true
+            fi
+            pkill -f 'backend-0.0.1-SNAPSHOT.jar' || true
+            sleep 2
+
             echo "📦 2. Building & Deploying Frontend..."
             cd /home/ec2-user/A2Z-cart/frontend
             npm install --legacy-peer-deps
-            npm run build
+            NODE_OPTIONS="--max-old-space-size=1536" npm run build
             sudo cp -r dist/* /var/www/a2z-cart/
             sudo chmod -R 755 /var/www/a2z-cart
             sudo chown -R nginx:nginx /var/www/a2z-cart
@@ -43,12 +62,10 @@ jobs:
             chmod +x mvnw
             ./mvnw clean package -DskipTests
 
-            echo "🔄 4. Restarting Services..."
-            if systemctl is-active --quiet a2z-backend; then
-              sudo systemctl restart a2z-backend
+            echo "🔄 4. Starting Backend and Nginx..."
+            if systemctl is-enabled --quiet a2z-backend 2>/dev/null; then
+              sudo systemctl start a2z-backend
             else
-              pkill -f 'backend-0.0.1-SNAPSHOT.jar' || true
-              sleep 2
               nohup java -jar target/backend-0.0.1-SNAPSHOT.jar --spring.profiles.active=rds > /home/ec2-user/backend.log 2>&1 &
             fi
 
