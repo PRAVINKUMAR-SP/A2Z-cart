@@ -11,8 +11,10 @@ import { useCartStore } from '../../store/cartStore';
 import { useProductStore } from '../../store/productStore';
 import { formatPrice } from '../../utils/formatters';
 import { ROLES } from '../../utils/constants';
+import { Capacitor } from '@capacitor/core';
 
 export default function Navbar() {
+  const isNativeApp = typeof window !== 'undefined' && (Capacitor?.isNativePlatform?.() || false);
   const navigate = useNavigate();
   const { user, isAuthenticated, logout, isBuyer, isSeller, isAdmin, switchRole, canSwitchRoles, updateUser } = useAuthStore();
   const { items, getTotals, fetchCartFromDb, resetCartOnLogout } = useCartStore();
@@ -118,11 +120,16 @@ export default function Navbar() {
 
   if (isLandingPage || isAuthPage) {
     return (
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
-          {/* Clean Typography Logo Only with Role-based Routing */}
-          <Link to={getLogoRedirectPath()} className="text-2xl font-black tracking-tight text-slate-900 font-['Outfit'] select-none">
-            A2Z<span className="text-blue-600 font-extrabold">~cart</span>
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between">
+          {/* Logo with App Icon and Role-based Routing */}
+          <Link to={getLogoRedirectPath()} className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 font-['Outfit'] select-none flex items-center gap-2 group">
+            <img 
+              src="/app-logo.png" 
+              alt="A2Z Logo" 
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl object-contain shadow-xs transition-transform group-hover:scale-105 shrink-0" 
+            />
+            <span>A2Z<span className="text-blue-600 font-extrabold group-hover:text-indigo-600 transition-colors">~cart</span></span>
           </Link>
 
           {/* Center: Refined Animated "Welcome to A2Z~cart" (Desktop/Tablet Only) */}
@@ -133,8 +140,22 @@ export default function Navbar() {
             <span className="h-[2px] w-12 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 rounded-full mt-0.5 group-hover:w-24 transition-all duration-500 opacity-80" />
           </div>
 
-          {/* Context-aware Action Button */}
-          <div className="flex items-center gap-3">
+          {/* Context-aware Action Buttons */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Direct Mobile & Desktop Cart Shortcut */}
+            <Link
+              to="/cart"
+              className="relative p-2 rounded-full hover:bg-slate-100 text-slate-700 transition-all flex items-center justify-center border border-slate-200/80 shadow-2xs"
+              title="View Cart"
+            >
+              <ShoppingCart className="w-4.5 h-4.5 text-slate-700" />
+              {itemCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-blue-600 text-white text-[9px] font-black rounded-full h-4 min-w-4 px-1 flex items-center justify-center shadow-xs">
+                  {itemCount}
+                </span>
+              )}
+            </Link>
+
             {isAuthenticated && user ? (
               <div className="flex items-center gap-2">
                 <Link
@@ -145,9 +166,9 @@ export default function Navbar() {
                 </Link>
                 <Link
                   to={isAdmin() ? '/admin/dashboard' : isSeller() ? '/seller/dashboard' : '/shop'}
-                  className="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                  className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5"
                 >
-                  <User className="w-4 h-4" />
+                  <User className="w-3.5 h-3.5" />
                   <span>{user?.name?.split(' ')[0] || 'Dashboard'}</span>
                 </Link>
               </div>
@@ -161,7 +182,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   to="/register"
-                  className="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5"
+                  className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5"
                 >
                   <span>Register</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -177,7 +198,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   to="/login"
-                  className="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5"
+                  className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5"
                 >
                   <User className="w-3.5 h-3.5" />
                   <span>Sign In</span>
@@ -185,19 +206,21 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <a
-                  href="/a2z-cart.apk"
-                  download="A2Z-cart.apk"
-                  className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-blue-600 text-xs font-bold transition-all flex items-center gap-1.5 border border-slate-200 shadow-2xs"
-                  title="Download Official Android App APK"
-                >
-                  <Download className="w-3.5 h-3.5 text-blue-600" />
-                  <span className="hidden xs:inline">Download App</span>
-                  <span className="xs:hidden">App</span>
-                </a>
+                {/* Only display on desktop web; hide on mobile screens or native app */}
+                {!isNativeApp && (
+                  <a
+                    href="/a2z-cart.apk"
+                    download="A2Z-cart.apk"
+                    className="hidden sm:flex px-3.5 py-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-blue-600 text-xs font-bold transition-all items-center gap-1.5 border border-slate-200 shadow-2xs"
+                    title="Download Official Android App APK"
+                  >
+                    <Download className="w-3.5 h-3.5 text-blue-600" />
+                    <span>Download App</span>
+                  </a>
+                )}
                 <Link
                   to="/login"
-                  className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5"
+                  className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5"
                 >
                   <User className="w-3.5 h-3.5" />
                   <span>Sign In</span>
@@ -214,12 +237,17 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-xs transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Navbar Row with Enhanced Height */}
-        <div className="py-2.5 sm:py-4.5 min-h-[64px] sm:min-h-[82px] flex items-center justify-between gap-2 sm:gap-6">
+        <div className="py-2.5 sm:py-4.5 min-h-[60px] sm:min-h-[82px] flex items-center justify-between gap-2 sm:gap-6">
           
-          {/* Logo with Role-based Routing */}
+          {/* Logo with App Icon and Role-based Routing */}
           <div className="flex items-center">
-            <Link to={getLogoRedirectPath()} className="text-xl sm:text-2xl md:text-[28px] font-black tracking-tight text-slate-900 font-['Outfit'] select-none flex items-center gap-1 group">
-              A2Z<span className="text-blue-600 font-extrabold group-hover:text-indigo-600 transition-colors">~cart</span>
+            <Link to={getLogoRedirectPath()} className="text-xl sm:text-2xl md:text-[28px] font-black tracking-tight text-slate-900 font-['Outfit'] select-none flex items-center gap-2 group">
+              <img 
+                src="/app-logo.png" 
+                alt="A2Z Logo" 
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl object-contain shadow-xs transition-transform group-hover:scale-105 shrink-0" 
+              />
+              <span>A2Z<span className="text-blue-600 font-extrabold group-hover:text-indigo-600 transition-colors">~cart</span></span>
             </Link>
           </div>
 

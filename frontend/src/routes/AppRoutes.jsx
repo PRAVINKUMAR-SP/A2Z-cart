@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import MobileBottomNav from '../components/layout/MobileBottomNav';
 
 // Pages
 import LandingPage from '../pages/public/LandingPage';
@@ -24,7 +25,7 @@ export default function AppRoutes() {
     <div className="min-h-screen flex flex-col justify-between bg-[#F8FAFC]">
       <Navbar />
 
-      <main className="flex-1">
+      <main className="flex-1 pb-16 md:pb-0">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
@@ -52,6 +53,7 @@ export default function AppRoutes() {
       </main>
 
       <Footer />
+      <MobileBottomNav />
     </div>
   );
 }

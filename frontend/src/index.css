@@ -200,6 +200,15 @@
   animation: nikeProductEnter 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.28s backwards;
 }
 
+/* Hide scrollbar for horizontal mobile scrolling rails */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 
 
 
