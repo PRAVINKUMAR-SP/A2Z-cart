@@ -20,12 +20,17 @@ import BuyerDashboard from '../pages/buyer/BuyerDashboard';
 import SellerDashboard from '../pages/seller/SellerDashboard';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 
+import { useAuthStore } from '../store/authStore';
+
 export default function AppRoutes() {
+  const { user, isAuthenticated } = useAuthStore();
+  const isUserLoggedIn = Boolean(isAuthenticated && user);
+
   return (
     <div className="min-h-screen flex flex-col justify-between bg-[#F8FAFC]">
       <Navbar />
 
-      <main className="flex-1 pb-16 md:pb-0">
+      <main className={`flex-1 ${isUserLoggedIn ? 'pb-16 md:pb-0' : 'pb-0'}`}>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
@@ -53,7 +58,7 @@ export default function AppRoutes() {
       </main>
 
       <Footer />
-      <MobileBottomNav />
+      {isUserLoggedIn && <MobileBottomNav />}
     </div>
   );
 }

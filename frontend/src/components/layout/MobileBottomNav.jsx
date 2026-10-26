@@ -10,11 +10,15 @@ export default function MobileBottomNav() {
   const { user, isAuthenticated, isAdmin, isSeller } = useAuthStore();
   const { itemCount } = getTotals();
 
+  // Bottom navigation only visible when user is logged in
+  if (!isAuthenticated || !user) {
+    return null;
+  }
+
   const currentPath = location.pathname;
 
-  // Determine user account link
+  // Determine user account / profile link based on active role
   const getAccountLink = () => {
-    if (!isAuthenticated) return '/login';
     if (isAdmin()) return '/admin/dashboard';
     if (isSeller()) return '/seller/dashboard';
     return '/buyer/dashboard';
@@ -42,15 +46,15 @@ export default function MobileBottomNav() {
     },
     {
       label: 'Orders',
-      path: isAuthenticated ? '/buyer/orders' : '/login',
+      path: '/buyer/orders',
       icon: Package,
       isActive: currentPath === '/buyer/orders',
     },
     {
-      label: isAuthenticated ? (user?.name?.split(' ')[0] || 'Account') : 'Sign In',
+      label: 'Profile',
       path: getAccountLink(),
       icon: User,
-      isActive: currentPath.includes('/dashboard') || currentPath === '/login' || currentPath === '/register',
+      isActive: currentPath.includes('/dashboard') || currentPath.includes('/profile'),
     },
   ];
 
