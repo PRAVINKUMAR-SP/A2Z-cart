@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Star, ShoppingCart, Sparkles, CheckCircle2, Heart, Zap } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useCartStore } from '../../store/cartStore';
+import { useAuthStore } from '../../store/authStore';
 import { formatPrice } from '../../utils/formatters';
 
 export default function ProductCard({ product }) {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
   const { addItem } = useCartStore();
   const [isWishlisted, setIsWishlisted] = useState(false);
+
+  const productLink = isAuthenticated ? `/product/${product.id}` : '/register';
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!isAuthenticated) {
+      toast('Please create an account to start shopping!', { icon: '🛍️' });
+      navigate('/register');
+      return;
+    }
     addItem(product, 1);
     toast.success(`${product.name} added to cart!`);
   };
@@ -19,6 +29,11 @@ export default function ProductCard({ product }) {
   const handleToggleWishlist = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!isAuthenticated) {
+      toast('Please create an account to save items!', { icon: '🤍' });
+      navigate('/register');
+      return;
+    }
     const nextState = !isWishlisted;
     setIsWishlisted(nextState);
     toast.success(nextState ? `Saved ${product.name} to wishlist!` : `Removed from wishlist`);
@@ -28,7 +43,7 @@ export default function ProductCard({ product }) {
     <div className="group bg-white rounded-2xl border border-slate-200/90 hover:border-blue-400 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative">
       <div>
         {/* Product Image Container */}
-        <Link to={`/product/${product.id}`} className="relative block overflow-hidden bg-slate-100 aspect-[4/5]">
+        <Link to={productLink} className="relative block overflow-hidden bg-slate-100 aspect-[4/5]">
           <img
             src={product.image}
             alt={product.name}
@@ -76,7 +91,7 @@ export default function ProductCard({ product }) {
           </div>
 
           {/* Title */}
-          <Link to={`/product/${product.id}`}>
+          <Link to={productLink}>
             <h3 className="font-bold text-slate-900 text-xs sm:text-sm leading-snug line-clamp-2 hover:text-blue-600 transition-colors mb-1.5 sm:mb-2 min-h-[32px] sm:min-h-[38px]">
               {product.name}
             </h3>

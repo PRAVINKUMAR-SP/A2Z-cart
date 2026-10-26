@@ -7,11 +7,13 @@ import {
 } from 'lucide-react';
 import ProductCard from '../../components/product/ProductCard';
 import { useProductStore } from '../../store/productStore';
+import { useAuthStore } from '../../store/authStore';
 import { CATEGORIES } from '../../utils/constants';
 import { formatPrice } from '../../utils/formatters';
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
   const { products, setSelectedCategory } = useProductStore();
   const [activeTab, setActiveTab] = useState('all');
 
@@ -163,6 +165,10 @@ export default function LandingPage() {
   };
 
   const handleCategoryClick = (catId) => {
+    if (!isAuthenticated) {
+      navigate('/register');
+      return;
+    }
     setSelectedCategory(catId);
     navigate('/shop');
   };
@@ -196,7 +202,7 @@ export default function LandingPage() {
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 pt-1 sm:pt-2">
                 <Link
-                  to="/shop"
+                  to={isAuthenticated ? '/shop' : '/register'}
                   className="px-6 sm:px-8 py-3 sm:py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.02]"
                 >
                   <ShoppingBag className="w-4 h-4" />
@@ -252,7 +258,7 @@ export default function LandingPage() {
                 className="relative z-10 w-full h-[220px] sm:h-[300px] lg:h-[380px] flex items-center justify-center animate-product-enter"
               >
                 <Link
-                  to={`/product/${currentItem.id}`}
+                  to={isAuthenticated ? `/product/${currentItem.id}` : '/register'}
                   className="group relative flex flex-col items-center justify-center w-full h-full cursor-pointer focus:outline-none"
                   title={`View ${currentItem.name}`}
                 >
@@ -388,7 +394,7 @@ export default function LandingPage() {
                   <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">
                     {product.category}
                   </span>
-                  <Link to={`/product/${product.id}`}>
+                  <Link to={isAuthenticated ? `/product/${product.id}` : '/register'}>
                     <h4 className="font-bold text-slate-900 text-xs line-clamp-2 hover:text-blue-600 transition-colors mb-2">
                       {product.name}
                     </h4>
@@ -407,7 +413,7 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <Link
-                    to={`/product/${product.id}`}
+                    to={isAuthenticated ? `/product/${product.id}` : '/register'}
                     className="p-2 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-colors"
                     title="View Deal"
                   >

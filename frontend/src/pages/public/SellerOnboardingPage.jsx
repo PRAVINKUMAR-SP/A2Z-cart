@@ -15,6 +15,10 @@ import {
   X,
   AlertCircle,
   Sparkles,
+  Lock,
+  Eye,
+  EyeOff,
+  Tag,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuthStore } from '../../store/authStore';
@@ -22,7 +26,7 @@ import { useSellerStore } from '../../store/sellerStore';
 
 export default function SellerOnboardingPage() {
   const navigate = useNavigate();
-  const { user, login, isSeller } = useAuthStore();
+  const { user, login, registerUser, updateUser, isSeller, isAuthenticated } = useAuthStore();
   const { submitApplication, saveSellerProfile, currentSellerProfile, fetchSellerProfile } = useSellerStore();
 
   const qrInputRef = useRef(null);
@@ -30,17 +34,57 @@ export default function SellerOnboardingPage() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const [form, setForm] = useState({
-    sellerName: '',
-    email: '',
-    phone: '',
-    sellerAddress: '',
-    gpayQr: '',
+    sellerName: user?.companyName || user?.sellerName || user?.name || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    password: '',
+    sellerAddress: user?.sellerAddress || '',
+    gpayQr: user?.gpayQr || '',
+    categories: ['dresses', 'shoes'],
   });
 
+  // Pre-populate if user logs in or switches
+  useEffect(() => {
+    if (user) {
+      setForm((prev) => ({
+        ...prev,
+        sellerName: prev.sellerName || user.companyName || user.sellerName || user.name || '',
+        email: prev.email || user.email || '',
+        phone: prev.phone || user.phone || '',
+        sellerAddress: prev.sellerAddress || user.sellerAddress || '',
+        gpayQr: prev.gpayQr || user.gpayQr || '',
+      }));
+    }
+  }, [user]);
+
+  const availableCategories = [
+    { id: 'dresses', label: '👗 Dresses & Ethnic' },
+    { id: 'shoes', label: '👟 Shoes & Sneakers' },
+    { id: 'slippers', label: '🩴 Slides & Slippers' },
+    { id: 'furniture', label: '🛋️ Furniture & Living' },
+    { id: 'home-appliances', label: '☕ Home Appliances' },
+    { id: 'toys', label: '🧸 Toys & Kids' },
+    { id: 'sports', label: '⚽ Sports & Fitness' },
+    { id: 'electronics', label: '🎧 Electronics & Audio' },
+  ];
+
+  const toggleCategory = (catId) => {
+    setForm((prev) => {
+      const exists = prev.categories.includes(catId);
+      return {
+        ...prev,
+        categories: exists
+          ? prev.categories.filter((c) => c !== catId)
+          : [...prev.categories, catId],
+      };
+    });
+  };
+
   // If user already has an active seller account, inform them and link directly to dashboard
-  if (isSeller() || user?.sellerStatus === 'APPROVED' || user?.companyName) {
+  if (isSeller() || user?.sellerStatus === 'APPROVED' || (user?.companyName && user?.gpayQr)) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16 text-center space-y-6">
         <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner ring-8 ring-emerald-50">
@@ -157,6 +201,14 @@ export default function SellerOnboardingPage() {
       return;
     }
 
+    // Require password for new guest sellers
+    if (!user && (!form.password || form.password.length < 6)) {
+      const msg = 'Please enter a password of at least 6 characters.';
+      setErrorMessage(msg);
+      toast.error(msg);
+      return;
+    }
+
     if (!form.sellerAddress.trim()) {
       const msg = 'Please enter your Store / Pickup Address.';
       setErrorMessage(msg);
@@ -174,7 +226,25 @@ export default function SellerOnboardingPage() {
     setIsSubmitting(true);
 
     try {
-      const targetUserId = user && user.email === form.email.trim().toLowerCase() ? user.id : null;
+      let activeUserId = user?.id;
+
+      // 1. If guest seller, register account dynamically
+      if (!user) {
+        try {
+          const registered = await registerUser({
+            name: form.sellerName.trim(),
+            email: form.email.trim().toLowerCase(),
+            phone: cleanPhone,
+            password: form.password,
+            role: 'ROLE_SELLER',
+          });
+          if (registered?.id) activeUserId = registered.id;
+        } catch (regErr) {
+          console.warn('Registration fallback:', regErr);
+          activeUserId = `usr-seller-${Date.now()}`;
+        }
+      }
+
       const sellerData = {
         sellerName: form.sellerName.trim(),
         companyName: form.sellerName.trim(),
@@ -183,40 +253,45 @@ export default function SellerOnboardingPage() {
         sellerAddress: form.sellerAddress.trim(),
         registeredAddress: form.sellerAddress.trim(),
         gpayQr: form.gpayQr,
-        userId: targetUserId,
+        categories: form.categories,
+        userId: activeUserId || `usr-seller-${Date.now()}`,
       };
 
-      // 1. Sync seller profile to PostgreSQL backend via API
+      // 2. Sync seller profile to PostgreSQL backend via API
       const profileRes = await saveSellerProfile(sellerData);
-      const finalUserId = profileRes?.userId || profileRes?.id || targetUserId || `usr-seller-${Date.now()}`;
+      const finalUserId = profileRes?.userId || profileRes?.id || activeUserId || `usr-seller-${Date.now()}`;
 
-      // 2. Submit record to store applications
+      // 3. Submit record to store applications
       submitApplication({
         ...sellerData,
         userId: finalUserId,
       });
 
-      // 3. Set user session strictly as ROLE_SELLER (never Admin)
-      login(
-        {
-          id: finalUserId,
-          name: form.sellerName.trim(),
-          email: form.email.trim().toLowerCase(),
-          phone: cleanPhone,
-          role: 'ROLE_SELLER',
-          sellerStatus: 'APPROVED',
-          companyName: form.sellerName.trim(),
-          sellerName: form.sellerName.trim(),
-          sellerAddress: form.sellerAddress.trim(),
-          registeredAddress: form.sellerAddress.trim(),
-          gpayQr: form.gpayQr,
-          isAdminUser: false,
-          avatar: form.gpayQr || 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&q=80',
-        },
-        'jwt_seller_' + Date.now()
-      );
+      // 4. Update or login user as active approved seller
+      const sellerUserSession = {
+        id: finalUserId,
+        name: form.sellerName.trim(),
+        email: form.email.trim().toLowerCase(),
+        phone: cleanPhone,
+        role: 'ROLE_SELLER',
+        sellerStatus: 'APPROVED',
+        companyName: form.sellerName.trim(),
+        sellerName: form.sellerName.trim(),
+        sellerAddress: form.sellerAddress.trim(),
+        registeredAddress: form.sellerAddress.trim(),
+        gpayQr: form.gpayQr,
+        categories: form.categories,
+        isAdminUser: false,
+        avatar: form.gpayQr || 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&q=80',
+      };
 
-      toast.success('Seller Account Created Successfully!');
+      if (user && updateUser) {
+        updateUser(sellerUserSession);
+      } else {
+        login(sellerUserSession, 'jwt_seller_' + Date.now());
+      }
+
+      toast.success('Seller Account Created Successfully! Store is now active.');
       setSubmitted(true);
     } catch (err) {
       console.error('Failed to create seller account:', err);
@@ -447,6 +522,77 @@ export default function SellerOnboardingPage() {
                 />
               </div>
             </div>
+          </div>
+
+          {/* New Guest Seller Password Field */}
+          {!user ? (
+            <div className="space-y-1.5">
+              <label className="block font-bold text-slate-700">
+                Account Password <span className="text-rose-500">*</span>
+              </label>
+              <div className="relative group">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  placeholder="At least 6 characters (for signing into Seller Hub)"
+                  value={form.password}
+                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  className="w-full pl-10 pr-11 py-3 bg-slate-50/80 border border-slate-200 hover:border-slate-300 focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 rounded-xl outline-none font-medium text-xs sm:text-sm text-slate-800 placeholder-slate-400 transition-all duration-200 shadow-2xs"
+                />
+                <Lock className="w-4 h-4 text-slate-400 group-focus-within:text-blue-600 absolute left-3.5 top-3.5 transition-colors" />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-600 transition-colors p-0.5 cursor-pointer"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              <p className="text-[11px] text-slate-400">You will use this password to log in and manage your store anytime.</p>
+            </div>
+          ) : (
+            <div className="p-3 bg-blue-50/70 rounded-2xl border border-blue-200 flex items-center justify-between text-xs">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs shrink-0">
+                  {user.name?.[0] || 'U'}
+                </div>
+                <div>
+                  <p className="font-bold text-slate-900 leading-tight">Logged in as {user.name}</p>
+                  <p className="text-[11px] text-blue-700 font-medium">{user.email}</p>
+                </div>
+              </div>
+              <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-blue-600 text-white shadow-2xs">
+                Upgrading to Seller
+              </span>
+            </div>
+          )}
+
+          {/* Primary Product Categories */}
+          <div className="space-y-1.5 pt-1">
+            <label className="block font-bold text-slate-700">
+              Select Your Selling Categories
+            </label>
+            <div className="flex flex-wrap gap-2 pt-0.5">
+              {availableCategories.map((cat) => {
+                const selected = form.categories.includes(cat.id);
+                return (
+                  <button
+                    type="button"
+                    key={cat.id}
+                    onClick={() => toggleCategory(cat.id)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 border cursor-pointer select-none ${
+                      selected
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                        : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100 hover:border-slate-300'
+                    }`}
+                  >
+                    {selected && <Check className="w-3 h-3 text-white" />}
+                    <span>{cat.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-[11px] text-slate-400">Choose the categories you plan to list your items in.</p>
           </div>
 
           {/* 4. Address */}

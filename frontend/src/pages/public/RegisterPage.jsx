@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Lock, Mail, User, Phone, ArrowRight, Eye, EyeOff, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Lock, Mail, User, Phone, ArrowRight, Eye, EyeOff, AlertCircle, CheckCircle2, Store, ShoppingBag } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuthStore } from '../../store/authStore';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialRole = queryParams.get('role') === 'seller' ? 'seller' : 'buyer';
+
   const { registerUser } = useAuthStore();
 
+  const [accountType, setAccountType] = useState(initialRole);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -61,14 +66,23 @@ export default function RegisterPage() {
       return;
     }
 
+    if (form.password.length < 6) {
+      const msg = 'Password must be at least 6 characters long.';
+      setErrorMessage(msg);
+      toast.error(msg);
+      return;
+    }
+
     setIsLoading(true);
 
     try {
+      const assignedRole = accountType === 'seller' ? 'ROLE_SELLER' : 'ROLE_BUYER';
       const user = await registerUser({
         name: form.name,
         email: form.email,
         phone: cleanPhone,
         password: form.password,
+        role: assignedRole,
       });
 
       if (!user) {
@@ -82,8 +96,8 @@ export default function RegisterPage() {
       setTimeout(() => {
         if (user.role === 'ROLE_ADMIN' || user.role === 'ADMIN') {
           navigate('/admin/dashboard');
-        } else if (user.role === 'ROLE_SELLER' || user.role === 'SELLER') {
-          navigate('/seller/dashboard');
+        } else if (user.role === 'ROLE_SELLER' || user.role === 'SELLER' || accountType === 'seller') {
+          navigate('/seller-onboarding');
         } else {
           navigate('/shop');
         }
@@ -120,19 +134,49 @@ export default function RegisterPage() {
               </span>
             </h2>
             <p className="text-sm sm:text-base font-bold text-slate-200 font-['Outfit'] pt-0.5">
-              Create your account
+              {accountType === 'seller' ? 'Create your seller account' : 'Create your account'}
             </p>
           </div>
         </div>
 
         {/* Right Side: Attractive Registration Form */}
         <div className="md:col-span-7 p-6 sm:p-8 flex flex-col justify-center bg-white">
+          {/* Dynamic Account Type Selector */}
+          <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-2xl mb-4 border border-slate-200/80">
+            <button
+              type="button"
+              onClick={() => setAccountType('buyer')}
+              className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                accountType === 'buyer'
+                  ? 'bg-white text-blue-700 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <ShoppingBag className="w-3.5 h-3.5" />
+              <span>Buyer Account</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setAccountType('seller')}
+              className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                accountType === 'seller'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Store className="w-3.5 h-3.5" />
+              <span>Seller Account</span>
+            </button>
+          </div>
+
           <div className="space-y-1 mb-4">
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-['Outfit'] tracking-tight">
-              Create your account
+              {accountType === 'seller' ? 'Start Selling on A2Z' : 'Create your account'}
             </h2>
             <p className="text-xs text-slate-500">
-              Fill in your details below to get started in seconds
+              {accountType === 'seller' 
+                ? 'Register your store and begin receiving customer orders' 
+                : 'Fill in your details below to get started in seconds'}
             </p>
           </div>
 
@@ -151,10 +195,10 @@ export default function RegisterPage() {
           )}
 
           <form onSubmit={handleRegister} className="space-y-4 text-xs">
-            {/* Full Name */}
+            {/* Full Name / Store Name */}
             <div className="space-y-1.5">
               <label className="block text-xs font-bold text-slate-700 tracking-wide">
-                Full Name
+                {accountType === 'seller' ? 'Store / Business Name' : 'Full Name'}
               </label>
               <div className="relative group">
                 <input
@@ -269,7 +313,11 @@ export default function RegisterPage() {
               disabled={isLoading}
               className="w-full py-3.5 text-white font-bold rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-700 shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer disabled:opacity-70 group"
             >
-              <span>{isLoading ? 'Creating Account...' : 'Create Free Account'}</span>
+              <span>
+                {isLoading 
+                  ? (accountType === 'seller' ? 'Creating Seller Account...' : 'Creating Account...') 
+                  : (accountType === 'seller' ? 'Create Seller Account' : 'Create Free Account')}
+              </span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
           </form>
