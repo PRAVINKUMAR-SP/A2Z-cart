@@ -3,13 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowRight, Sparkles, ShieldCheck, Zap, Truck, Star, 
   Store, ShoppingBag, Eye, TrendingUp, CheckCircle2,
-  Clock, Heart, ShoppingCart, Tag, RotateCcw, Download, Smartphone, Search
+  Clock, Heart, ShoppingCart, Tag, RotateCcw, Download, Smartphone
 } from 'lucide-react';
 import ProductCard from '../../components/product/ProductCard';
 import { useProductStore } from '../../store/productStore';
 import { CATEGORIES } from '../../utils/constants';
 import { formatPrice } from '../../utils/formatters';
-import { Capacitor } from '@capacitor/core';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -168,8 +167,6 @@ export default function LandingPage() {
     navigate('/shop');
   };
 
-  const isNativeApp = typeof window !== 'undefined' && (Capacitor?.isNativePlatform?.() || false);
-
   const currentItem = heroShowcase[heroCatIndex] || heroShowcase[0];
   const currentWatermark = currentItem.watermark || 'SNEAKERS';
   const splitMid = Math.ceil(currentWatermark.length / 2);
@@ -177,200 +174,10 @@ export default function LandingPage() {
   const splitRightWord = currentWatermark.slice(splitMid);
 
   return (
-    <div className="w-full bg-[#FAFBFD] text-slate-800 pb-24 space-y-8 sm:space-y-12 lg:space-y-16">
+    <div className="w-full bg-[#FAFBFD] text-slate-800 pb-24 space-y-16">
 
-      {/* ========================================================================= */}
-      {/* MOBILE EXPERIENCE (lg:hidden): Native App Header Search, Stories & Hero  */}
-      {/* ========================================================================= */}
-      <div className="lg:hidden w-full space-y-3 pt-2">
-        {/* 1. Mobile Quick Search Bar */}
-        <div className="px-3.5">
-          <form 
-            onSubmit={(e) => {
-              e.preventDefault();
-              navigate('/shop');
-            }}
-            className="relative"
-          >
-            <div className="relative flex items-center group">
-              <Search className="w-4 h-4 text-blue-600 absolute left-3.5 pointer-events-none" />
-              <input
-                type="text"
-                placeholder="Search sneakers, dresses, headphones..."
-                value={useProductStore.getState().searchQuery}
-                onChange={(e) => useProductStore.getState().setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-20 py-2.5 bg-white border border-slate-200/90 focus:border-blue-500 rounded-full text-xs text-slate-800 placeholder:text-slate-400 outline-none shadow-xs"
-              />
-              <button
-                type="submit"
-                className="absolute right-1.5 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-[11px] font-bold shadow-2xs"
-              >
-                Search
-              </button>
-            </div>
-          </form>
-        </div>
-
-        {/* 2. Mobile Stories Category Rail (Instagram / Flipkart Style) */}
-        <div className="w-full border-y border-slate-200/70 bg-white py-2.5 overflow-hidden">
-          <div className="flex items-center gap-3.5 px-3.5 overflow-x-auto no-scrollbar scroll-smooth">
-            {CATEGORIES.filter((c) => c.id !== 'all').map((cat) => {
-              const thumbImg = categoryThumbnails[cat.id] || cat.banner;
-              const isSelected = currentItem.category === cat.id;
-
-              return (
-                <button
-                  key={`story-${cat.id}`}
-                  onClick={() => handleCategoryClick(cat.id)}
-                  className="flex flex-col items-center justify-center shrink-0 group focus:outline-none"
-                >
-                  <div className={`p-0.5 rounded-full transition-all duration-300 ${
-                    isSelected 
-                      ? 'bg-gradient-to-tr from-blue-600 via-indigo-500 to-amber-400 p-[2.5px] scale-105 shadow-md' 
-                      : 'bg-gradient-to-tr from-slate-200 to-slate-300 hover:from-blue-400 hover:to-indigo-500'
-                  }`}>
-                    <div className="w-14 h-14 rounded-full overflow-hidden bg-white p-0.5">
-                      <img
-                        src={thumbImg}
-                        alt={cat.name}
-                        className="w-full h-full rounded-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-                  <span className={`text-[10.5px] tracking-tight mt-1 truncate max-w-[64px] text-center ${
-                    isSelected ? 'font-black text-blue-600' : 'font-semibold text-slate-700'
-                  }`}>
-                    {cat.name.split(' & ')[0]}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* 3. Mobile Featured Hero Carousel Card */}
-        <div className="px-3.5">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-800 p-4 sm:p-5 text-white shadow-xl shadow-blue-900/15">
-            {/* Ambient Background Watermark */}
-            <div className="absolute right-1 -bottom-2 text-7xl font-black text-white/10 uppercase select-none pointer-events-none font-['Outfit'] tracking-tighter">
-              {currentWatermark}
-            </div>
-
-            {/* Top Pill / Badge */}
-            <div className="relative z-10 flex items-center justify-between mb-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-black uppercase tracking-wider text-amber-300 border border-white/20">
-                <Zap className="w-3 h-3 fill-amber-300 text-amber-300" />
-                {currentItem.badge}
-              </span>
-              <span className="text-[10px] font-bold text-white/75 bg-black/20 px-2 py-0.5 rounded-full">
-                {heroCatIndex + 1} / {heroShowcase.length}
-              </span>
-            </div>
-
-            {/* Content Row */}
-            <div className="relative z-10 grid grid-cols-12 gap-2 items-center">
-              {/* Left Column: Heading, Product, CTA */}
-              <div className="col-span-7 space-y-1.5">
-                <h2 className="text-lg sm:text-xl font-black font-['Outfit'] leading-tight tracking-tight text-white">
-                  Everything you love, <br />
-                  <span className="text-amber-300">from A to Z.</span>
-                </h2>
-                <p className="text-[11px] text-blue-100 font-medium line-clamp-2 leading-snug">
-                  {currentItem.name}
-                </p>
-
-                <div className="pt-1.5 flex flex-wrap items-center gap-2">
-                  <Link
-                    to="/shop"
-                    className="px-4 py-2 bg-white text-blue-700 hover:bg-blue-50 font-black text-xs rounded-full shadow-md flex items-center gap-1.5 transition-transform active:scale-95"
-                  >
-                    <span>Shop Now</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-
-                  <Link
-                    to="/seller-onboarding"
-                    className="px-3 py-2 bg-white/15 hover:bg-white/25 text-white font-bold text-xs rounded-full border border-white/20 transition-all"
-                  >
-                    <span>Sell</span>
-                  </Link>
-
-                  {!isNativeApp && (
-                    <a
-                      href="/a2z-cart.apk"
-                      download="A2Z-cart.apk"
-                      className="px-2.5 py-2 bg-emerald-500/90 text-white font-bold text-[11px] rounded-full flex items-center gap-1 shadow-sm"
-                      title="Download Android App"
-                    >
-                      <Download className="w-3 h-3" />
-                      <span>App</span>
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              {/* Right Column: Floating Product Cutout Image */}
-              <div className="col-span-5 flex flex-col items-center justify-center relative min-h-[140px]">
-                <Link
-                  to={`/product/${currentItem.id}`}
-                  className="group flex flex-col items-center justify-center w-full"
-                  title={`View ${currentItem.name}`}
-                >
-                  <img
-                    key={`mobile-hero-img-${heroCatIndex}`}
-                    src={currentItem.image}
-                    alt={currentItem.name}
-                    className="max-h-[130px] w-auto max-w-full object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.35)] animate-product-enter transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="w-24 h-2 bg-black/25 rounded-full blur-sm mt-1" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Slide dots indicator */}
-            <div className="relative z-10 flex items-center justify-center gap-1.5 mt-3 pt-2 border-t border-white/15">
-              {heroShowcase.map((item, idx) => (
-                <button
-                  key={`dot-${item.id}`}
-                  onClick={() => setHeroCatIndex(idx)}
-                  aria-label={`Slide ${idx + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    heroCatIndex === idx ? 'w-5 bg-amber-300' : 'w-1.5 bg-white/40'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* 4. Mobile Trust Chips Bar (Horizontal snap-scroll) */}
-        <div className="px-3.5">
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 text-[11px] font-semibold text-slate-600">
-            <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200/90 shadow-2xs shrink-0">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-              <span>100% Genuine</span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200/90 shadow-2xs shrink-0">
-              <Truck className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-              <span>Free 1-Day Delivery</span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200/90 shadow-2xs shrink-0">
-              <RotateCcw className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-              <span>7-Day Return</span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200/90 shadow-2xs shrink-0">
-              <ShieldCheck className="w-3.5 h-3.5 text-purple-600 shrink-0" />
-              <span>Secure Payments</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ========================================================================= */}
-      {/* DESKTOP EXPERIENCE (hidden lg:flex): Split Animated Typography & Hero    */}
-      {/* ========================================================================= */}
-      <section className="hidden lg:flex w-full min-h-[calc(100vh-60px)] h-[calc(100vh-60px)] py-0 bg-gradient-to-b from-blue-50/70 via-indigo-50/30 to-[#FAFBFD] border-b border-slate-200/60 items-center">
+      {/* 1. Human-Crafted Marketplace Hero Banner */}
+      <section className="w-full min-h-0 lg:min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] py-6 sm:py-8 lg:py-0 bg-gradient-to-b from-blue-50/70 via-indigo-50/30 to-[#FAFBFD] border-b border-slate-200/60 flex items-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
             
@@ -517,72 +324,72 @@ export default function LandingPage() {
       </section>
 
       {/* 3. Deal of the Day / Flash Steals Strip */}
-      <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-700 rounded-3xl p-4 sm:p-8 text-white shadow-xl relative overflow-hidden">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
           
           {/* Header & Countdown */}
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6 pb-4 sm:pb-6 border-b border-white/15">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/15">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-amber-300 text-[10px] sm:text-xs font-black uppercase tracking-wider">
-                <Zap className="w-3 h-3 fill-amber-300 text-amber-300" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-amber-300 text-xs font-black uppercase tracking-wider">
+                <Zap className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
                 <span>Steal of the Day</span>
               </div>
-              <h2 className="text-xl sm:text-3xl font-black font-['Outfit']">
+              <h2 className="text-2xl sm:text-3xl font-black font-['Outfit']">
                 Limited Stock Flash Offers — Minimum 50% Off
               </h2>
-              <p className="text-indigo-100 text-[11px] sm:text-sm">
-                Extra ₹500 off at checkout with coupon code <code className="bg-white/20 px-1.5 py-0.5 rounded font-mono font-bold">A2ZSAVE</code>
+              <p className="text-indigo-100 text-xs sm:text-sm">
+                Extra ₹500 off at checkout with coupon code <code className="bg-white/20 px-2 py-0.5 rounded font-mono font-bold">A2ZSAVE</code>
               </p>
             </div>
 
             {/* Countdown Box */}
-            <div className="flex items-center gap-2 bg-black/35 backdrop-blur-md px-3.5 py-2.5 rounded-2xl border border-white/20 self-start md:self-auto">
-              <Clock className="w-4 h-4 text-amber-300 mr-0.5" />
+            <div className="flex items-center gap-2.5 bg-black/35 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20">
+              <Clock className="w-4 h-4 text-amber-300 mr-1" />
               <div className="text-center">
-                <span className="text-lg sm:text-xl font-black font-mono">{String(timeLeft.hours).padStart(2, '0')}</span>
-                <span className="block text-[8px] sm:text-[9px] uppercase font-bold text-indigo-200">Hours</span>
+                <span className="text-xl font-black font-mono">{String(timeLeft.hours).padStart(2, '0')}</span>
+                <span className="block text-[9px] uppercase font-bold text-indigo-200">Hours</span>
               </div>
-              <span className="text-base sm:text-lg font-bold text-indigo-200">:</span>
+              <span className="text-lg font-bold text-indigo-200">:</span>
               <div className="text-center">
-                <span className="text-lg sm:text-xl font-black font-mono">{String(timeLeft.minutes).padStart(2, '0')}</span>
-                <span className="block text-[8px] sm:text-[9px] uppercase font-bold text-indigo-200">Mins</span>
+                <span className="text-xl font-black font-mono">{String(timeLeft.minutes).padStart(2, '0')}</span>
+                <span className="block text-[9px] uppercase font-bold text-indigo-200">Mins</span>
               </div>
-              <span className="text-base sm:text-lg font-bold text-indigo-200">:</span>
+              <span className="text-lg font-bold text-indigo-200">:</span>
               <div className="text-center">
-                <span className="text-lg sm:text-xl font-black font-mono">{String(timeLeft.seconds).padStart(2, '0')}</span>
-                <span className="block text-[8px] sm:text-[9px] uppercase font-bold text-indigo-200">Secs</span>
+                <span className="text-xl font-black font-mono">{String(timeLeft.seconds).padStart(2, '0')}</span>
+                <span className="block text-[9px] uppercase font-bold text-indigo-200">Secs</span>
               </div>
             </div>
           </div>
 
-          {/* Flash Deal Items Grid - 2 Column on Mobile */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 pt-4 sm:pt-6">
+          {/* Flash Deal Items Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6">
             {flashDeals.map((product) => (
               <div
                 key={product.id}
-                className="bg-white text-slate-800 rounded-2xl p-2.5 sm:p-3.5 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                className="bg-white text-slate-800 rounded-2xl p-3.5 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="relative h-28 sm:h-44 rounded-xl overflow-hidden bg-slate-50 mb-2 sm:mb-3">
+                  <div className="relative h-44 rounded-xl overflow-hidden bg-slate-50 mb-3">
                     <img
                       src={product.image}
                       alt={product.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <span className="absolute top-1.5 left-1.5 bg-rose-600 text-white text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 rounded-full shadow-sm">
+                    <span className="absolute top-2 left-2 bg-rose-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow-sm">
                       {product.discountPercent}% OFF
                     </span>
-                    <span className="absolute top-1.5 right-1.5 bg-amber-500 text-slate-900 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm flex items-center gap-0.5">
+                    <span className="absolute top-2 right-2 bg-amber-500 text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
                       <Star className="w-2.5 h-2.5 fill-slate-900" />
                       {product.rating}
                     </span>
                   </div>
 
-                  <span className="text-[9px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-0.5 sm:mb-1">
+                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">
                     {product.category}
                   </span>
                   <Link to={`/product/${product.id}`}>
-                    <h4 className="font-bold text-slate-900 text-[11px] sm:text-xs line-clamp-2 hover:text-blue-600 transition-colors mb-1.5 sm:mb-2 min-h-[28px] sm:min-h-[32px]">
+                    <h4 className="font-bold text-slate-900 text-xs line-clamp-2 hover:text-blue-600 transition-colors mb-2">
                       {product.name}
                     </h4>
                   </Link>
@@ -590,21 +397,21 @@ export default function LandingPage() {
 
                 <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
                   <div>
-                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5">
-                      <span className="text-xs sm:text-base font-black text-slate-900 font-['Outfit']">
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-base font-black text-slate-900 font-['Outfit']">
                         {formatPrice(product.price)}
                       </span>
-                      <span className="text-[9px] sm:text-[11px] text-slate-400 line-through">
+                      <span className="text-[11px] text-slate-400 line-through">
                         {formatPrice(product.originalPrice)}
                       </span>
                     </div>
                   </div>
                   <Link
                     to={`/product/${product.id}`}
-                    className="p-1.5 sm:p-2 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-colors"
+                    className="p-2 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-colors"
                     title="View Deal"
                   >
-                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
               </div>
@@ -871,84 +678,82 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 12. Dedicated Mobile App Download Showcase Banner (Only on Web) */}
-      {!isNativeApp && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8">
-          <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 rounded-3xl p-6 sm:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-            {/* Ambient Glows */}
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
+      {/* 12. Dedicated Mobile App Download Showcase Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8">
+        <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 rounded-3xl p-6 sm:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+          {/* Ambient Glows */}
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-8 space-y-4 text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold uppercase tracking-wider">
-                  <Smartphone className="w-4 h-4 text-blue-400" />
-                  <span>Official Mobile App Available</span>
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-8 space-y-4 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold uppercase tracking-wider">
+                <Smartphone className="w-4 h-4 text-blue-400" />
+                <span>Official Mobile App Available</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-4xl font-black font-['Outfit'] tracking-tight">
+                Shop on the Go with the <br className="hidden sm:inline" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-violet-400">
+                  A2Z~cart Android App
+                </span>
+              </h2>
+
+              <p className="text-slate-300 text-xs sm:text-base max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Enjoy a native, fluid mobile experience with 3D product previews, real-time shipment updates, quick-access cart, and exclusive app-only deals.
+              </p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-left text-xs font-semibold text-slate-300 max-w-lg mx-auto lg:mx-0">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>3D Spatial Models</span>
                 </div>
-
-                <h2 className="text-2xl sm:text-4xl font-black font-['Outfit'] tracking-tight">
-                  Shop on the Go with the <br className="hidden sm:inline" />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-violet-400">
-                    A2Z~cart Android App
-                  </span>
-                </h2>
-
-                <p className="text-slate-300 text-xs sm:text-base max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                  Enjoy a native, fluid mobile experience with 3D product previews, real-time shipment updates, quick-access cart, and exclusive app-only deals.
-                </p>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-left text-xs font-semibold text-slate-300 max-w-lg mx-auto lg:mx-0">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>3D Spatial Models</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Cloud Cart Sync</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Express Checkout</span>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Cloud Cart Sync</span>
                 </div>
-
-                <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
-                  <a
-                    href="/a2z-cart.apk"
-                    download="A2Z-cart.apk"
-                    className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-sm rounded-2xl shadow-xl shadow-blue-600/30 flex items-center gap-3.5 transition-all hover:scale-105"
-                  >
-                    <Download className="w-5 h-5 text-white animate-bounce" />
-                    <div className="text-left leading-tight">
-                      <p className="text-[10px] uppercase font-bold tracking-wider text-blue-200">Direct Download</p>
-                      <p className="text-sm font-black">Download Android APK (Auto-Update)</p>
-                    </div>
-                  </a>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Express Checkout</span>
                 </div>
               </div>
 
-              <div className="lg:col-span-4 flex items-center justify-center">
-                <div className="relative w-52 sm:w-60 h-[320px] sm:h-[380px] bg-slate-800/80 rounded-[36px] p-3 border-4 border-slate-700 shadow-2xl flex flex-col items-center justify-between">
-                  <div className="w-20 h-4 bg-slate-900 rounded-full mb-2" />
-                  <div className="flex-1 w-full bg-slate-900/90 rounded-2xl p-4 flex flex-col items-center justify-center text-center space-y-3">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg">
-                      <ShoppingBag className="w-7 h-7 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-black text-white font-['Outfit']">A2Z~cart</p>
-                      <p className="text-[10px] text-blue-300">Android Edition v1.0</p>
-                    </div>
-                    <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
-                      Live Cloud Sync
-                    </span>
+              <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                <a
+                  href="/a2z-cart.apk"
+                  download="A2Z-cart.apk"
+                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-sm rounded-2xl shadow-xl shadow-blue-600/30 flex items-center gap-3.5 transition-all hover:scale-105"
+                >
+                  <Download className="w-5 h-5 text-white animate-bounce" />
+                  <div className="text-left leading-tight">
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-blue-200">Direct Download</p>
+                    <p className="text-sm font-black">Download Android APK (Auto-Update)</p>
                   </div>
-                  <div className="w-12 h-1 bg-slate-600 rounded-full mt-2" />
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:col-span-4 flex items-center justify-center">
+              <div className="relative w-52 sm:w-60 h-[320px] sm:h-[380px] bg-slate-800/80 rounded-[36px] p-3 border-4 border-slate-700 shadow-2xl flex flex-col items-center justify-between">
+                <div className="w-20 h-4 bg-slate-900 rounded-full mb-2" />
+                <div className="flex-1 w-full bg-slate-900/90 rounded-2xl p-4 flex flex-col items-center justify-center text-center space-y-3">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg">
+                    <ShoppingBag className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-black text-white font-['Outfit']">A2Z~cart</p>
+                    <p className="text-[10px] text-blue-300">Android Edition v1.0</p>
+                  </div>
+                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+                    Live Cloud Sync
+                  </span>
                 </div>
+                <div className="w-12 h-1 bg-slate-600 rounded-full mt-2" />
               </div>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
     </div>
   );
